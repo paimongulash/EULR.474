@@ -469,20 +469,6 @@
   }
   .archive-content.unlocked { display: flex; }
 
-  .archive-empty {
-    flex: 1 1 auto;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    color: var(--lavender-dim);
-    font-size: 14px;
-    letter-spacing: 3px;
-    text-align: center;
-  }
-
   /* ===== Постер ===== */
   .summary-poster-section {
     display: flex;
@@ -533,6 +519,65 @@
       transparent 1px 3px);
     pointer-events: none;
     z-index: 3;
+  }
+
+  /* ===== ФОТО В СВОДКЕ ===== */
+  .summary-photo-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+    margin-top: 4px;
+  }
+  .summary-photo {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    border: 1px solid var(--lavender-dim);
+    background: var(--blue-dark);
+    padding: 8px;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+  .summary-photo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    filter: hue-rotate(190deg) saturate(0.85) brightness(0.95);
+    border: 1px solid rgba(185,167,217,.25);
+    border-radius: 4px;
+  }
+  .summary-photo::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    background-image:
+      radial-gradient(circle at 30% 20%, rgba(185,167,217,.08), transparent 40%),
+      radial-gradient(circle at 70% 80%, rgba(185,167,217,.05), transparent 50%);
+    pointer-events: none;
+    z-index: 2;
+    animation: ghost 4s infinite;
+    border-radius: 4px;
+  }
+  .summary-photo::after {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    background: repeating-linear-gradient(0deg,
+      rgba(185,167,217,.09) 0 1px,
+      transparent 1px 3px);
+    pointer-events: none;
+    z-index: 3;
+    border-radius: 4px;
+  }
+  .summary-photo .photo-caption {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--lavender-dim);
+    padding-top: 6px;
+    text-transform: uppercase;
   }
 
   /* ===== Взаимоотношения ===== */
@@ -1020,6 +1065,301 @@
     letter-spacing: .5px;
   }
 
+  /* ===== СЕКРЕТНЫЙ РАЗДЕЛ ===== */
+  .secret-lock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 50px 20px;
+    text-align: center;
+  }
+  .secret-lock .lock-mark {
+    font-size: 32px;
+    letter-spacing: 6px;
+    color: var(--lavender);
+    text-shadow: var(--glow);
+    animation: csPulse 2s ease-in-out infinite;
+  }
+  .secret-lock .lock-sub {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--lavender-dim);
+    text-transform: uppercase;
+  }
+  .secret-lock form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 6px;
+  }
+  .secret-lock input[type="password"] {
+    background: var(--blue-dark);
+    border: 1px solid var(--lavender-dim);
+    color: var(--lavender);
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 3px;
+    padding: 8px 12px;
+    min-width: 220px;
+    outline: none;
+    text-shadow: var(--glow);
+    caret-color: var(--lavender);
+    border-radius: 4px;
+  }
+  .secret-lock input[type="password"]:focus {
+    border-color: var(--lavender);
+    box-shadow: 0 0 10px rgba(185,167,217,.35);
+  }
+  .secret-lock .lock-err {
+    min-height: 16px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #ff5f7f;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity .2s ease;
+  }
+  .secret-lock .lock-err.show { opacity: 1; }
+  @keyframes csPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .6; }
+  }
+
+  .secret-content { display: none; }
+  .secret-content.unlocked { display: block; }
+
+  .secret-top {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+
+  /* Проигрыватель */
+  .vinyl-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid var(--lavender-dim);
+    background: rgba(8,12,24,.55);
+    box-shadow: inset 0 0 20px rgba(0,0,0,.5);
+    border-radius: 6px;
+  }
+  .vinyl-player {
+    position: relative;
+    width: 260px; height: 200px;
+    border: 1px solid var(--lavender-dim);
+    background: #0a0e1a;
+    border-radius: 6px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .vinyl-player .platter {
+    position: relative;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: repeating-radial-gradient(circle at 50% 50%, #141b2e 0 2px, #0a0e1a 2px 4px, #1c2438 4px 5px);
+    border: 2px solid #1c2438;
+    box-shadow: 0 0 0 2px #000, 0 0 26px rgba(185,167,217,.25), inset 0 0 30px rgba(0,0,0,.9);
+    animation: vinylSpin 2.2s linear infinite;
+    animation-play-state: paused;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vinyl-player.playing .platter {
+    animation-play-state: running;
+  }
+  .vinyl-player .platter::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, rgba(185,167,217,.1) 0deg 20deg, transparent 20deg 60deg, rgba(185,167,217,.06) 60deg 80deg, transparent 80deg 180deg, rgba(185,167,217,.1) 180deg 200deg, transparent 200deg 240deg, rgba(185,167,217,.06) 240deg 260deg, transparent 260deg 360deg);
+    pointer-events: none;
+  }
+  .vinyl-player .platter::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 34%; height: 34%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, var(--lavender-soft) 0%, var(--lavender-dim) 55%, var(--blue-deep) 100%);
+    box-shadow: 0 0 0 3px var(--blue-dark), 0 0 18px rgba(185,167,217,.5);
+  }
+  .vinyl-player .spindle {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 8px; height: 8px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--blue-dark);
+    box-shadow: 0 0 0 2px var(--lavender);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .vinyl-player .tonearm {
+    position: absolute;
+    top: 10px; right: 14px;
+    width: 6px; height: 90px;
+    background: var(--lavender-dim);
+    border-radius: 3px;
+    transform-origin: top center;
+    transform: rotate(0deg);
+    transition: transform .6s ease;
+    box-shadow: 0 0 6px rgba(0,0,0,.5);
+  }
+  .vinyl-player.playing .tonearm {
+    transform: rotate(-22deg);
+  }
+  .vinyl-player .tonearm::before {
+    content: "";
+    position: absolute;
+    top: -8px; left: -6px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--lavender-dim);
+    border: 2px solid var(--blue-dark);
+  }
+  .vinyl-player .tonearm::after {
+    content: "";
+    position: absolute;
+    bottom: -4px; left: -2px;
+    width: 10px; height: 10px;
+    background: var(--lavender);
+    border-radius: 2px;
+  }
+  .vinyl-player .play-btn {
+    position: absolute;
+    bottom: 8px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--lavender-dim);
+    text-transform: uppercase;
+  }
+
+  @keyframes vinylSpin { to { transform: rotate(360deg); } }
+
+  .vinyl-hint {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--lavender-dim);
+    text-transform: uppercase;
+    text-align: center;
+    transition: color .2s ease;
+  }
+  .vinyl-hint.playing { color: var(--lavender); text-shadow: var(--glow); }
+
+  .secret-blocks-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .secret-block { 
+    border: 1px solid var(--lavender-dim); 
+    background: rgba(8,12,24,.55); 
+    padding: 14px 16px; 
+    box-shadow: inset 0 0 20px rgba(0,0,0,.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    border-radius: 4px;
+  }
+
+  .secret-block.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .secret-block .sb-head {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--lavender);
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--lavender-dim);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    text-shadow: var(--glow);
+  }
+  .secret-block .sb-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--lavender-dim);
+    letter-spacing: 1px;
+    min-height: 40px;
+  }
+
+  .album {
+    border: 1px solid var(--lavender-dim);
+    background: rgba(8,12,24,.55);
+    padding: 14px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,.5);
+    border-radius: 4px;
+  }
+  .album-head {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--lavender);
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--lavender-dim);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    text-shadow: var(--glow);
+  }
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .album-photo {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border: 1px solid var(--lavender-dim);
+    background: var(--blue-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lavender-dim);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 20px rgba(0,0,0,.8);
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .album-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(185,167,217,.1) 0 1px, transparent 1px 3px);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .album-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: sepia(.15) hue-rotate(200deg) saturate(.8) brightness(.92);
+    position: relative;
+    z-index: 1;
+  }
+
   @media (max-width: 720px) {
     .tab-content > .grid {
       grid-template-columns: 1fr;
@@ -1040,6 +1380,7 @@
     .tab { padding: 6px 10px; font-size: 10px; letter-spacing: 1px; }
 
     .summary-poster { max-width: 100%; aspect-ratio: 4 / 3; }
+    .summary-photo { max-width: 100%; }
 
     .relation-grid { grid-template-columns: 1fr; }
     .items-grid { grid-template-columns: 1fr; }
@@ -1054,6 +1395,9 @@
     .win-fkler .img-wrap { aspect-ratio: 4 / 3; max-height: 60vh; }
 
     .album-arrow { width: 36px; font-size: 20px; }
+    .secret-top { grid-template-columns: 1fr; }
+    .vinyl-player { width: 220px; height: 170px; }
+    .vinyl-player .platter { width: 130px; height: 130px; }
   }
 </style>
 </head>
@@ -1113,8 +1457,7 @@
               <h2>Базовые параметры</h2>
               <div class="row"><span class="k">Класс:</span><span class="v">Replika — EULR</span></div>
               <div class="row"><span class="k">Серия:</span><span class="v">Eule // "Сова"</span></div>
-              <div class="row"><span class="k">Место сборки:</span><span class="v" >Хаймат</span></div>
-              <div class="row"><span class="k">Назначение:</span><span class="v">Оказание медецинской помощи/Работа с бумагами и отчетами</span></div>
+              <div class="row"><span class="k">Назначение:</span><span class="v">Оказание медицинской помощи / Работа с бумагами и отчётами</span></div>
               <div class="row"><span class="k">Статус:</span><span class="v ok">АКТИВЕН</span></div>
               <div class="row"><span class="k">Приписка:</span><span class="v">ERES — 427</span></div>
             </div>
@@ -1123,7 +1466,7 @@
               <h2>Внешние характеристики</h2>
               <div class="row"><span class="k">Рост:</span><span class="v">175 см</span></div>
               <div class="row"><span class="k">Волосы:</span><span class="v">Короткие</span></div>
-              <div class="row"><span class="k">Особые метки:</span><span class="v">Волосы собранны в пучок</span></div>
+              <div class="row"><span class="k">Особые метки:</span><span class="v">Волосы собраны в пучок</span></div>
             </div>
 
             <div class="section">
@@ -1140,11 +1483,11 @@
 
             <div class="section">
               <h2>Служебная история</h2>
-              <div class="row"><span class="k">Цикл 05.05.2157:</span><span class="v"> Модуль собран и введен в эксплуатацию </span></div>
-              <div class="row"><span class="k">Цикл 17.07.2157:</span><span class="v"> Первая операция в роли Ассистента </span></div>
-              <div class="row"><span class="k">Цикл 20.08.2157:</span><span class="v"> Вторая операция в роли Ассистента </span></div>
-              <div class="row"><span class="k">Цикл 21.09.2157:</span><span class="v"> Первая операция как хирурга </span></div>
-              <div class="row"><span class="k">Цикл 11.11.2157:</span><span class="v">ННаправленна по экстренной квоте на ERES-427</span></div>
+              <div class="row"><span class="k">Цикл 05.05.2157:</span><span class="v">Модуль собран и введён в эксплуатацию</span></div>
+              <div class="row"><span class="k">Цикл 17.07.2157:</span><span class="v">Первая операция в роли ассистента</span></div>
+              <div class="row"><span class="k">Цикл 20.08.2157:</span><span class="v">Вторая операция в роли ассистента</span></div>
+              <div class="row"><span class="k">Цикл 21.09.2157:</span><span class="v">Первая операция как хирурга</span></div>
+              <div class="row"><span class="k">Цикл 11.11.2157:</span><span class="v">Направлена по экстренной квоте на ERES-427</span></div>
             </div>
 
             <div class="section">
@@ -1217,6 +1560,14 @@
       <!-- ===================== КРАТКАЯ СВОДКА ===================== -->
       <div class="tab-content" id="tab-summary">
         <div class="data">
+          <!-- ФОТО В НАЧАЛЕ -->
+          <div class="section summary-photo-section">
+            <div class="summary-photo">
+              <img src="11.png" alt="EULR.474 // Фото 1">
+              <div class="photo-caption">АРХИВНОЕ ФОТО // 11</div>
+            </div>
+          </div>
+
           <div class="section summary-poster-section">
             <div class="summary-poster">
               <img src="eule_poster.png" alt="EULR.474 // Сова">
@@ -1271,7 +1622,30 @@
               работой при трансплантации.
             </div>
           </div>
-          
+
+          <div class="section">
+            <h2>Личное</h2>
+            <div class="row full">
+              На Хаймате Сова нашла утешение в игре на скрипке. В свободные минуты между
+              операциями она занималась музыкой, что помогало ей восстанавливаться и справляться
+              с эмоциональными нагрузками. Особенно ей запомнилась одна из её коллег, которая
+              показалась ей более открытой и дружелюбной. Со временем между ними установились
+              тёплые сестринские отношения.
+            </div>
+            <div class="row full">
+              Перед своим отъездом на ERES-427, старшая сестра, вдохновлённая искренней
+              привязанностью Совы к музыке, потратила половину своего жалования на особый подарок.
+              С тех пор её волосы украшали изящные заколки в виде белого лотоса, которые стали
+              для неё символом поддержки и заботы.
+            </div>
+            <div class="row full">
+              Коллеги по медицинскому отделу замечали за Совой одну милую особенность: она часто
+              наклоняла голову набок, когда проявляла интерес к чему-то новому, и по очереди
+              хлопала глазами, когда её мысли путались. Эти маленькие жесты придавали ей особую
+              индивидуальность и делали её ещё более узнаваемой среди персонала.
+            </div>
+          </div>
+
           <div class="section">
             <h2>Заключение</h2>
             <div class="row full">
@@ -1279,6 +1653,15 @@
               ERES-427, где ей предстояло применить свои навыки и знания в новых условиях.
             </div>
           </div>
+
+          <!-- ФОТО В КОНЦЕ -->
+          <div class="section summary-photo-section">
+            <div class="summary-photo">
+              <img src="12.png" alt="EULR.474 // Фото 2">
+              <div class="photo-caption">АРХИВНОЕ ФОТО // 12</div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -1523,10 +1906,52 @@
           <button id="archiveSubmit">ПОДТВЕРДИТЬ</button>
         </div>
 
+        <!-- ===== СЕКРЕТНЫЙ РАЗДЕЛ (АРХИВ) ===== -->
         <div class="archive-content" id="archiveContent">
-          <div class="archive-empty">
-            <div>АРХИВ ПУСТ</div>
-            <div style="font-size:11px; opacity:.7;">Материалы будут добавлены позднее</div>
+          <div class="secret-top">
+            <div class="vinyl-wrap">
+              <!-- Проигрыватель -->
+              <div class="vinyl-player" id="vinyl" title="Нажмите, чтобы включить / остановить">
+                <div class="platter">
+                  <div class="spindle"></div>
+                </div>
+                <div class="tonearm"></div>
+                <div class="play-btn">PLAY</div>
+              </div>
+              <div class="vinyl-hint" id="vinylHint">НАЖМИТЕ · ВОСПРОИЗВЕДЕНИЕ</div>
+              <audio id="vinylAudio" src="Вайбик.mp3" preload="auto" loop></audio>
+              
+              <div class="secret-blocks-vertical" id="secretBlocks">
+                <div class="secret-block">
+                  <div class="sb-head">Фетиши и наклонности</div>
+                  <div class="sb-body">
+                    <span class="redacted">████████████████████████████████████████</span><br>
+                    <span class="redacted">████████████████████████████████████████</span><br>
+                    <span class="redacted">████████████████████████████████████████</span><br>
+                    <span style="display:block; margin-top:10px; font-style:italic; color:var(--lavender-dim); font-size:11px; letter-spacing:1px;">[ ДАННЫЕ БУДУТ ОТКРЫВАТЬСЯ ПО МЕРЕ ОБНАРУЖЕНИЯ ]</span>
+                  </div>
+                </div>
+                <div class="secret-block">
+                  <div class="sb-head">Пометки наблюдателей</div>
+                  <div class="sb-body">
+                    <div style="margin-bottom:10px; word-break: break-word; overflow-wrap: break-word;">
+                      <span style="color:var(--lavender); margin-right:6px;">▸</span>
+                      Выражается яркий интерес к живописи.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="album">
+              <div class="album-head">ФОТОАЛЬБОМ // EULR.474</div>
+              <div class="album-grid">
+                <div class="album-photo"><img src="photo4.png" alt="Фото 01"></div>
+                <div class="album-photo"><img src="photo2.png" alt="Фото 02"></div>
+                <div class="album-photo"><img src="photo3.png" alt="Фото 03"></div>
+                <div class="album-photo"><img src="photo1.png" alt="Фото 04"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1577,210 +2002,155 @@
       bootEl.addEventListener('click', openDossier);
     }
 
-    function openFkler() {
-      var viewer = document.getElementById('fklerViewer');
-      if (!viewer) return;
-      viewer.classList.add('visible');
-      viewer.style.zIndex = 90;
-    }
-    function closeFkler() {
-      var viewer = document.getElementById('fklerViewer');
-      if (!viewer) return;
-      viewer.classList.remove('visible');
+    var tabs = document.querySelectorAll('.tab');
+    var tabContents = document.querySelectorAll('.tab-content');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.getAttribute('data-tab');
+        tabs.forEach(function (t) { t.classList.remove('active'); });
+        tabContents.forEach(function (c) { c.classList.remove('active'); });
+        tab.classList.add('active');
+        var content = document.getElementById('tab-' + target);
+        if (content) content.classList.add('active');
+      });
+    });
+
+    /* ===== СЕКРЕТНЫЙ РАЗДЕЛ (АРХИВ) ===== */
+    var SECRET_PASS = '2157';
+    var lock = document.getElementById('archiveLock');
+    var pass = document.getElementById('archivePassword');
+    var btn = document.getElementById('archiveSubmit');
+    var err = document.getElementById('archiveError');
+    var content = document.getElementById('archiveContent');
+    var vinyl = document.getElementById('vinyl');
+    var audio = document.getElementById('vinylAudio');
+    var hint = document.getElementById('vinylHint');
+
+    function tryUnlockArchive() {
+      if (!pass) return;
+      var val = (pass.value || '').trim().toLowerCase();
+      if (val === SECRET_PASS) {
+        if (err) err.textContent = '';
+        if (lock) lock.style.display = 'none';
+        if (content) content.classList.add('unlocked');
+        var archiveTabBtn = document.querySelector('[data-tab="archive"]');
+        if (archiveTabBtn) archiveTabBtn.classList.remove('locked');
+
+        var blocks = document.querySelectorAll('.secret-block');
+        blocks.forEach(function(block, index) {
+            setTimeout(function() {
+                block.classList.add('show');
+            }, index * 600);
+        });
+      } else {
+        if (err) err.textContent = 'НЕВЕРНЫЙ КОД ДОСТУПА';
+        if (pass) { pass.value = ''; pass.focus(); }
+        var screenEl = document.querySelector('.screen');
+        if (screenEl) {
+          screenEl.style.animation = 'none';
+          void screenEl.offsetWidth;
+          screenEl.style.animation = 'winShake .3s 2';
+        }
+      }
     }
 
+    if (btn) btn.addEventListener('click', tryUnlockArchive);
+    if (pass) {
+      pass.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); tryUnlockArchive(); }
+      });
+    }
+
+    function updateHint() {
+      if (!audio || !hint) return;
+      var playing = !audio.paused;
+      if (vinyl) vinyl.classList.toggle('playing', playing);
+      if (hint) {
+        hint.classList.toggle('playing', playing);
+        hint.textContent = playing
+          ? 'ВОСПРОИЗВЕДЕНИЕ · НАЖМИТЕ, ЧТОБЫ ОСТАНОВИТЬ'
+          : 'НАЖМИТЕ · ВОСПРОИЗВЕДЕНИЕ';
+      }
+    }
+
+    if (vinyl && audio) {
+      vinyl.addEventListener('click', function () {
+        if (audio.paused) {
+          var p = audio.play();
+          if (p && p.catch) p.catch(function () {});
+        } else {
+          audio.pause();
+        }
+      });
+      audio.addEventListener('play', updateHint);
+      audio.addEventListener('pause', updateHint);
+      audio.addEventListener('ended', updateHint);
+      updateHint();
+    }
+
+    /* ===== RELATIONS ===== */
     var RELATIONS = [];
-    var ARCHIVE_PASSWORD = '2157';
 
-    function statusClass(status) {
-      var map = {
-        'Недоверие': 'rel-trust',
-        'Тоска': 'rel-longing',
-        'Нейтральные': 'rel-neutral',
-        'Дружба': 'rel-friend',
-        'Крепкая связь': 'rel-bond',
-        'Любовь': 'rel-love',
-        'Мертв': 'rel-dead',
-        'Страх': 'rel-fear',
-        'Разочарование': 'rel-disappoint',
-        'Уважение': 'rel-respect',
-        'Сожаление': 'rel-regret',
-        'Симпатия': 'rel-sympathy',
-        'Отвращение': 'rel-disgust'
-      };
-      return map[status] || 'rel-neutral';
-    }
+    var relGrid = document.getElementById('relationGrid');
+    var relWrap = document.getElementById('relationsWrap');
+    var relDetailBody = document.getElementById('relDetailBody');
+    var relBack = document.getElementById('relBack');
 
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, function (c) {
-        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
-      });
-    }
-
-    function previewOf(note) {
-      if (!note) return 'Записи отсутствуют.';
-      var firstLine = note.split('\n')[0];
-      return firstLine.length > 120 ? firstLine.slice(0, 117) + '…' : firstLine;
-    }
-
-    function renderStatuses(statuses, cls) {
-      if (!statuses || statuses.length === 0) return '';
-      return statuses.map(function (st) {
-        return '<span class="' + cls + ' ' + statusClass(st) + '">' + escapeHtml(st) + '</span>';
-      }).join('');
-    }
-
-    function init() {
-      var btnDossier = document.getElementById('btnOpenDossier');
-      if (btnDossier) btnDossier.addEventListener('click', openDossier);
-
-      var iconDossier = document.querySelector('[data-action="dossier"]');
-      if (iconDossier) iconDossier.addEventListener('click', openDossier);
-
-      var iconFkler = document.getElementById('iconFkler');
-      if (iconFkler) {
-        iconFkler.addEventListener('click', function (e) {
-          e.preventDefault(); e.stopPropagation();
-          openFkler();
-        });
-      }
-
-      var btnClose = document.getElementById('btnCloseFkler');
-      if (btnClose) {
-        btnClose.addEventListener('click', function (e) {
-          e.preventDefault(); e.stopPropagation();
-          closeFkler();
-        });
-      }
-
-      var spamWindow = document.getElementById('spamWindow');
-      if (spamWindow) {
-        spamWindow.addEventListener('click', function (e) {
-          e.preventDefault(); e.stopPropagation();
-          var url = spamWindow.getAttribute('data-href');
-          if (url) window.open(url, '_blank', 'noopener,noreferrer');
-        });
-      }
-
-      var tabs = document.querySelectorAll('.tab');
-      var tabContents = document.querySelectorAll('.tab-content');
-      tabs.forEach(function (tab) {
-        tab.addEventListener('click', function () {
-          var target = tab.getAttribute('data-tab');
-          tabs.forEach(function (t) { t.classList.remove('active'); });
-          tabContents.forEach(function (c) { c.classList.remove('active'); });
-          tab.classList.add('active');
-          var content = document.getElementById('tab-' + target);
-          if (content) content.classList.add('active');
-        });
-      });
-
-      var relGrid = document.getElementById('relationGrid');
-      var relWrap = document.getElementById('relationsWrap');
-      var relDetailBody = document.getElementById('relDetailBody');
-      var relBack = document.getElementById('relBack');
-
-      if (relGrid) {
-        relGrid.innerHTML = '';
-        if (RELATIONS.length === 0) {
-          relGrid.innerHTML =
-            '<div class="rel-card rel-empty" style="grid-column: 1 / -1; text-align:center; cursor:default;">' +
-              '<div class="rel-name">Нет записей</div>' +
-              '<div class="rel-preview">Данные о взаимоотношениях отсутствуют.</div>' +
-            '</div>';
-        } else {
-          RELATIONS.sort(function (a, b) {
-            return a.name.localeCompare(b.name, 'ru');
-          });
-          RELATIONS.forEach(function (rel, idx) {
-            var card = document.createElement('div');
-            card.className = 'rel-card';
-            card.setAttribute('data-idx', idx);
-
-            var statusesHtml = rel.statuses && rel.statuses.length
-              ? '<div class="rel-statuses">' + renderStatuses(rel.statuses, 'rel-status') + '</div>'
-              : '';
-
-            card.innerHTML =
-              statusesHtml +
-              '<div class="rel-name">' + escapeHtml(rel.name) + '</div>' +
-              '<div class="rel-preview">' + escapeHtml(previewOf(rel.note)) + '</div>';
-
-            card.addEventListener('click', function () { openRelDetail(idx); });
-            relGrid.appendChild(card);
-          });
-        }
-      }
-
-      function openRelDetail(idx) {
-        var rel = RELATIONS[idx];
-        if (!rel || !relDetailBody) return;
-
-        var statusesHtml = rel.statuses && rel.statuses.length
-          ? '<div class="rel-detail-statuses">' + renderStatuses(rel.statuses, 'rel-detail-status') + '</div>'
-          : '';
-
-        var noteHtml = rel.note
-          ? '<div class="rel-detail-note">' + escapeHtml(rel.note) + '</div>'
-          : '<div class="rel-detail-note" style="opacity:.5">Нет записей.</div>';
-
-        relDetailBody.innerHTML =
-          '<div class="rel-detail-card">' +
-            '<div class="rel-detail-name">' + escapeHtml(rel.name) + '</div>' +
-            statusesHtml +
-            noteHtml +
+    if (relGrid) {
+      relGrid.innerHTML = '';
+      if (RELATIONS.length === 0) {
+        relGrid.innerHTML =
+          '<div class="rel-card rel-empty" style="grid-column: 1 / -1; text-align:center; cursor:default;">' +
+            '<div class="rel-name">Нет записей</div>' +
+            '<div class="rel-preview">Данные о взаимоотношениях отсутствуют.</div>' +
           '</div>';
-
-        if (relWrap) relWrap.classList.add('detail-open');
-        if (relDetailBody) relDetailBody.scrollTop = 0;
-      }
-
-      if (relBack) {
-        relBack.addEventListener('click', function () {
-          if (relWrap) relWrap.classList.remove('detail-open');
+      } else {
+        RELATIONS.sort(function (a, b) {
+          return a.name.localeCompare(b.name, 'ru');
         });
-      }
+        RELATIONS.forEach(function (rel, idx) {
+          var card = document.createElement('div');
+          card.className = 'rel-card';
+          card.setAttribute('data-idx', idx);
 
-      /* ===== Архив ===== */
-      var archiveInput = document.getElementById('archivePassword');
-      var archiveBtn = document.getElementById('archiveSubmit');
-      var archiveError = document.getElementById('archiveError');
-      var archiveLock = document.getElementById('archiveLock');
-      var archiveContent = document.getElementById('archiveContent');
-      var archiveTabBtn = document.querySelector('[data-tab="archive"]');
+          var statusesHtml = rel.statuses && rel.statuses.length
+            ? '<div class="rel-statuses">' + rel.statuses.map(function (st) {
+                return '<span class="rel-status ' + (st.cls || 'rel-neutral') + '">' + st.label + '</span>';
+              }).join('') + '</div>'
+            : '';
 
-      function tryUnlockArchive() {
-        if (!archiveInput) return;
-        var val = (archiveInput.value || '').trim();
-        if (val === ARCHIVE_PASSWORD) {
-          if (archiveError) archiveError.textContent = '';
-          if (archiveLock) archiveLock.style.display = 'none';
-          if (archiveContent) archiveContent.classList.add('unlocked');
-          if (archiveTabBtn) archiveTabBtn.classList.remove('locked');
-        } else {
-          if (archiveError) archiveError.textContent = 'НЕВЕРНЫЙ КОД ДОСТУПА';
-          if (archiveInput) { archiveInput.value = ''; archiveInput.focus(); }
-          var screenEl = document.querySelector('.screen');
-          if (screenEl) {
-            screenEl.style.animation = 'none';
-            void screenEl.offsetWidth;
-            screenEl.style.animation = 'winShake .3s 2';
-          }
-        }
-      }
+          card.innerHTML =
+            statusesHtml +
+            '<div class="rel-name">' + rel.name + '</div>' +
+            '<div class="rel-preview">' + rel.text.split('\n')[0].slice(0, 120) + '</div>';
 
-      if (archiveBtn) archiveBtn.addEventListener('click', tryUnlockArchive);
-      if (archiveInput) {
-        archiveInput.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter') { e.preventDefault(); tryUnlockArchive(); }
+          card.addEventListener('click', function () {
+            var r = RELATIONS[idx];
+            if (!relDetailBody) return;
+            var statusesHtml = r.statuses && r.statuses.length
+              ? '<div class="rel-detail-statuses">' + r.statuses.map(function (st) {
+                  return '<span class="rel-detail-status ' + (st.cls || 'rel-neutral') + '">' + st.label + '</span>';
+                }).join('') + '</div>'
+              : '';
+            relDetailBody.innerHTML =
+              '<div class="rel-detail-card">' +
+                '<div class="rel-detail-name">' + r.name + '</div>' +
+                statusesHtml +
+                '<div class="rel-detail-note">' + r.text + '</div>' +
+              '</div>';
+            if (relWrap) relWrap.classList.add('detail-open');
+            if (relDetailBody) relDetailBody.scrollTop = 0;
+          });
+
+          relGrid.appendChild(card);
         });
       }
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
-      init();
+    if (relBack) {
+      relBack.addEventListener('click', function () {
+        if (relWrap) relWrap.classList.remove('detail-open');
+      });
     }
 
     function tick() {
@@ -1806,8 +2176,6 @@
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
-        var viewer = document.getElementById('fklerViewer');
-        if (viewer && viewer.classList.contains('visible')) { closeFkler(); return; }
         document.body.style.transition = 'opacity .4s';
         document.body.style.opacity = '0';
         setTimeout(function () {
