@@ -334,9 +334,9 @@
     object-position: center top;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    filter: none;             /* убран синий фильтр */
-    mix-blend-mode: normal;   /* убран режим screen */
-    opacity: 1;               /* полная непрозрачность */
+    filter: none;
+    mix-blend-mode: normal;
+    opacity: 1;
     display: block;
     position: relative;
     z-index: 1;
@@ -862,70 +862,125 @@
   .dossier-wrap { display: none; }
   .dossier-wrap.visible { display: block; }
 
-  /* ===== Аккордеон для отчётов ===== */
-  .report-accordion {
+  /* ===== МЕДИЦИНСКАЯ КАРТА ===== */
+  .medcard {
     border: 1px solid var(--lavender-dim);
     background: rgba(8,12,24,.55);
-    margin-bottom: 12px;
+    margin-bottom: 18px;
     border-radius: 4px;
     overflow: hidden;
   }
-  .report-accordion summary {
-    list-style: none;
-    cursor: pointer;
-    padding: 10px 14px;
-    font-size: 13px;
-    letter-spacing: 2px;
-    color: var(--lavender);
-    text-transform: uppercase;
+  .medcard-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    transition: background .12s ease;
+    padding: 10px 16px;
+    background: rgba(185,167,217,.08);
+    border-bottom: 1px solid var(--lavender-dim);
+    flex-wrap: wrap;
   }
-  .report-accordion summary::-webkit-details-marker { display: none; }
-  .report-accordion summary::after {
-    content: "▸";
+  .medcard-head .medcard-num {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--lavender);
+    text-transform: uppercase;
+    text-shadow: var(--glow);
+  }
+  .medcard-head .medcard-status {
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 3px 10px;
+    border: 1px solid #b8ff7c;
+    color: #b8ff7c;
+    background: rgba(184,255,124,.08);
+    text-shadow: 0 0 6px rgba(184,255,124,.5);
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .medcard-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2px 20px;
+    padding: 12px 16px;
+    font-size: 13px;
+    border-bottom: 1px dashed var(--lavender-dim);
+  }
+  .medcard-meta .meta-item {
+    display: flex;
+    gap: 6px;
+    line-height: 1.5;
+  }
+  .medcard-meta .meta-k {
     color: var(--lavender-dim);
-    font-size: 12px;
-    transition: transform .15s ease;
+    letter-spacing: 1px;
+    flex: 0 0 auto;
   }
-  .report-accordion[open] summary::after { transform: rotate(90deg); }
-  .report-accordion summary:hover { background: rgba(185,167,217,.07); }
-  .report-accordion .report-body {
-    padding: 8px 16px 16px;
-    border-top: 1px dashed var(--lavender-dim);
+  .medcard-meta .meta-v {
+    color: var(--lavender);
+    letter-spacing: 1px;
+  }
+  .medcard-section {
+    padding: 12px 16px 4px;
+  }
+  .medcard-section .medcard-section-title {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--lavender);
+    text-transform: uppercase;
+    border-bottom: 1px dotted var(--lavender-dim);
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+  }
+  .medcard-step {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dotted rgba(185,167,217,.2);
     font-size: 14px;
     line-height: 1.6;
     color: var(--lavender);
   }
-  .report-accordion .report-body .report-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 24px;
+  .medcard-step:last-child { border-bottom: none; }
+  .medcard-step .step-num {
+    flex: 0 0 auto;
     font-size: 12px;
-    color: var(--lavender-dim);
     letter-spacing: 1px;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px dotted rgba(185,167,217,.3);
+    color: var(--lavender-dim);
+    border: 1px solid var(--lavender-dim);
+    height: 22px;
+    width: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    margin-top: 2px;
   }
-  .report-accordion .report-body h3 {
+  .medcard-step .step-body strong {
+    color: var(--lavender-soft);
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 2px;
+    text-shadow: var(--glow);
+  }
+  .medcard-conclusion {
+    margin: 12px 16px 16px;
+    padding: 12px 14px;
+    border: 1px solid var(--lavender-dim);
+    background: rgba(185,167,217,.06);
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--lavender);
+    letter-spacing: 1px;
+  }
+  .medcard-conclusion .concl-title {
     font-size: 12px;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     color: var(--lavender);
     text-transform: uppercase;
-    margin: 12px 0 6px;
-  }
-  .report-accordion .report-body p {
-    margin-bottom: 8px;
-    line-height: 1.65;
-  }
-  .report-accordion .report-body .conclusion {
-    margin-top: 12px;
-    padding-top: 10px;
-    border-top: 1px dotted rgba(185,167,217,.3);
+    margin-bottom: 6px;
   }
 
   /* ===== Стартовые предметы ===== */
@@ -1067,7 +1122,7 @@
               <h2>Внешние характеристики</h2>
               <div class="row"><span class="k">Рост:</span><span class="v">175 см</span></div>
               <div class="row"><span class="k">Волосы:</span><span class="v">Короткие</span></div>
-              <div class="row"><span class="k">Особые метки:</span><span class="v">Волосы собраны в пучок</span></div>
+              <div class="row"><span class="k">Особые метки:</span><span class="v">Волосы собранны в пучок</span></div>
             </div>
 
             <div class="section">
@@ -1084,12 +1139,11 @@
 
             <div class="section">
               <h2>Служебная история</h2>
-              <div class="row"><span class="k">Цикл 05.05.2157:</span><span class="v">Выпущена с конвеера</span></div>
-              <div class="row"><span class="k">Цикл 17.07.2157:</span><span class="v">Первая операция/Ассистент</span></div>
-              <div class="row"><span class="k">Цикл 20.08.2157:</span><span class="v">Вторая операция/Ассистент</span></div>
-              <div class="row"><span class="k">Цикл 21.09.2157:</span><span class="v">Первая операция как хирург</span></div>
-              <div class="row"><span class="k">Цикл 11.11.2157:</span><span class="v">Отобрана для отправления на ERES — 427</span></div>
-              <div class="row"><span class="k">Цикл 12.11.2157:</span><span class="v">Прибытие на ERES — 427</span></div>
+              <div class="row"><span class="k">Цикл 05.05.2157:</span><span class="v"> Модкль собран и введен в эксплуатацию </span></div>
+              <div class="row"><span class="k">Цикл 17.07.2157:</span><span class="v"> Первая операци в роли Ассистента </span></div>
+              <div class="row"><span class="k">Цикл 20.08.2157:</span><span class="v"> Вторая операция в роли Ассистента </span></div>
+              <div class="row"><span class="k">Цикл 21.09.2157:</span><span class="v"> Первая операция как хирурга </span></div>
+              <div class="row"><span class="k">Цикл 11.11.2157:</span><span class="v">ННаправленна по экстренной квоте на ERES-427</span></div>
             </div>
 
             <div class="section">
@@ -1256,128 +1310,181 @@
           <div class="section">
             <h2>Медицинские отчёты</h2>
             <div class="row full" style="color:var(--lavender-dim); font-size:13px; margin-bottom:14px;">
-              Отчёты по операциям, в которых EULR.474 принимала участие в качестве ассистента или
-              хирурга. Нажми на заголовок, чтобы раскрыть подробности.
+              Архивные записи о хирургических вмешательствах, в которых EULR.474 принимала участие
+              в качестве ассистента или хирурга. Оформлено по стандарту медицинской карты.
             </div>
 
-            <details class="report-accordion">
-              <summary>Отчёт о хирургической операции № 1</summary>
-              <div class="report-body">
-                <div class="report-meta">
-                  <span>Дата: 17.07.2157</span>
-                  <span>Шифр: EULR-OP-001</span>
-                  <span>Вмешательство: Трансплантация печени</span>
+            <!-- Отчёт №1 -->
+            <div class="medcard">
+              <div class="medcard-head">
+                <span class="medcard-num">Отчёт о хирургическом вмешательстве № 1</span>
+                <span class="medcard-status">РЕЗУЛЬТАТ: УСПЕШНЫЙ</span>
+              </div>
+              <div class="medcard-meta">
+                <div class="meta-item"><span class="meta-k">Дата:</span><span class="meta-v">17.07.2157</span></div>
+                <div class="meta-item"><span class="meta-k">Шифр:</span><span class="meta-v">EULR-OP-001</span></div>
+                <div class="meta-item" style="grid-column: 1 / -1;"><span class="meta-k">Наименование:</span><span class="meta-v">Трансплантация печени</span></div>
+              </div>
+              <div class="medcard-section">
+                <div class="medcard-section-title">Ход вмешательства</div>
+                <div class="medcard-step">
+                  <span class="step-num">1</span>
+                  <div class="step-body">
+                    <strong>Получение доступа и подготовка операционной области.</strong>
+                    Хирург EULR.176 произвёл разметку и рассечение тканей для доступа к брюшной
+                    полости. Ассистент EULR.474 осуществляла гемостаз и подачу инструментов.
+                    EULR.475 контролировала витальные показатели и вела протокол операции.
+                  </div>
                 </div>
-
-                <h3>Ход операции</h3>
-
-                <p><strong>1. Доступ и подготовка операционного поля.</strong>
-                Главный хирург EULR.176 выполнил разметку и послойное рассечение тканей, обеспечив
-                широкий доступ к брюшной полости. Ассистент EULR.474 осуществляла гемостаз по ходу
-                разреза и подачу инструментов; ассистент EULR.475 вела контроль показателей
-                жизнедеятельности и фиксировала этапы вмешательства в протокол.</p>
-
-                <p><strong>2. Мобилизация и удаление поражённого органа.</strong>
-                EULR.176 произвёл выделение печени с пересечением связочного аппарата и сосудистых
-                ножек. EULR.474 ассистировала при клипировании и лигировании сосудов, обеспечивая
-                сухость операционного поля. EULR.475 поддерживала стабильность гемодинамики и
-                своевременно информировала хирурга об изменениях показателей.</p>
-
-                <p><strong>3. Подготовка трансплантата и наложение сосудистых анастомозов.</strong>
-                Под контролем EULR.176 выполнено наложение анастомозов печёночной артерии, воротной
-                вены и нижней полой вены. EULR.474 удерживала трансплантат в требуемом положении и
-                ассистировала при наложении швов. EULR.475 осуществляла непрерывный мониторинг
-                перфузии и параметров свёртываемости.</p>
-
-                <p><strong>4. Восстановление желчеоттока и послойное ушивание раны.</strong>
-                EULR.176 сформировал билиарный анастомоз и произвёл ревизию брюшной полости.
-                EULR.474 выполнила окончательный гемостаз и установку дренажей. EULR.475 провела
-                контрольный подсчёт инструментов и перевязочного материала. Рана ушита послойно.</p>
-
-                <div class="conclusion">
-                  <h3>Заключение</h3>
-                  <p>Вмешательство завершено в полном объёме. Трансплантат жизнеспособен,
-                  кровоснабжение восстановлено, желчеотток обеспечен. Итог: успешный.</p>
+                <div class="medcard-step">
+                  <span class="step-num">2</span>
+                  <div class="step-body">
+                    <strong>Мобилизация и удаление поражённого органа.</strong>
+                    EULR.176 мобилизовал печень, пересекая связки и сосудистые структуры.
+                    EULR.474 ассистировала при лигировании и клипировании сосудов, обеспечивая
+                    гемостаз. EULR.475 поддерживала гемодинамическую стабильность, информируя
+                    хирурга об изменениях показателей.
+                  </div>
+                </div>
+                <div class="medcard-step">
+                  <span class="step-num">3</span>
+                  <div class="step-body">
+                    <strong>Подготовка трансплантата и формирование сосудистых анастомозов.</strong>
+                    Под руководством EULR.176 были сформированы анастомозы печёночной артерии,
+                    воротной вены и нижней полой вены. EULR.474 фиксировала трансплантат и
+                    ассистировала при наложении швов. EULR.475 осуществляла мониторинг перфузии
+                    и коагулограммы.
+                  </div>
+                </div>
+                <div class="medcard-step">
+                  <span class="step-num">4</span>
+                  <div class="step-body">
+                    <strong>Восстановление желчного оттока и ушивание раны.</strong>
+                    EULR.176 сформировал билиарный анастомоз и провёл ревизию брюшной полости.
+                    EULR.474 выполнила окончательный гемостаз и дренирование. EULR.475 провела
+                    подсчёт расходных материалов. Рана была ушита послойно.
+                  </div>
                 </div>
               </div>
-            </details>
+              <div class="medcard-conclusion">
+                <div class="concl-title">Заключение</div>
+                Вмешательство выполнено в полном объёме. Трансплантат жизнеспособен,
+                кровоснабжение и желчеотток обеспечены. Результат: успешный.
+              </div>
+            </div>
 
-            <details class="report-accordion">
-              <summary>Отчёт о хирургической операции № 2</summary>
-              <div class="report-body">
-                <div class="report-meta">
-                  <span>Дата: 20.08.2157</span>
-                  <span>Шифр: EULR-OP-002</span>
-                  <span>Вмешательство: Замена травмированной конечности рабочего на имплант</span>
+            <!-- Отчёт №2 -->
+            <div class="medcard">
+              <div class="medcard-head">
+                <span class="medcard-num">Отчёт о хирургическом вмешательстве № 2</span>
+                <span class="medcard-status">РЕЗУЛЬТАТ: УСПЕШНЫЙ</span>
+              </div>
+              <div class="medcard-meta">
+                <div class="meta-item"><span class="meta-k">Дата:</span><span class="meta-v">20.08.2157</span></div>
+                <div class="meta-item"><span class="meta-k">Шифр:</span><span class="meta-v">EULR-OP-002</span></div>
+                <div class="meta-item" style="grid-column: 1 / -1;"><span class="meta-k">Наименование:</span><span class="meta-v">Протезирование травмированной конечности</span></div>
+              </div>
+              <div class="medcard-section">
+                <div class="medcard-section-title">Ход вмешательства</div>
+                <div class="medcard-step">
+                  <span class="step-num">1</span>
+                  <div class="step-body">
+                    <strong>Подготовка культи.</strong>
+                    EULR.176 провёл ревизию области повреждения, удалил нежизнеспособные ткани и
+                    подготовил культю. Ассистент EULR.474 обеспечивала гемостаз, подачу инструментов
+                    и позиционирование конечности.
+                  </div>
                 </div>
-
-                <h3>Ход операции</h3>
-
-                <p><strong>1. Подготовка и обработка культи.</strong>
-                EULR.176 произвёл ревизию области повреждения, иссечение нежизнеспособных тканей и
-                обработку культи. Ассистент EULR.474 обеспечивала гемостаз, подачу инструментов и
-                удержание конечности в необходимом положении.</p>
-
-                <p><strong>2. Формирование опорно-двигательной культи.</strong>
-                Главный хирург выполнил обработку костного опила и подготовку мягких тканей к
-                установке импланта. EULR.474 ассистировала при фиксации тканей и осушала
-                операционное поле.</p>
-
-                <p><strong>3. Установка и фиксация импланта.</strong>
-                EULR.176 произвёл позиционирование импланта и его фиксацию к костной культе.
-                EULR.474 удерживала имплант в проектном положении, контролировала соосность и
-                ассистировала при затягивании крепёжных элементов.</p>
-
-                <p><strong>4. Проверка функционирования и ушивание.</strong>
-                Выполнена проверка подвижности и стабильности импланта. EULR.176 произвёл послойное
-                ушивание раны; EULR.474 установила дренаж и наложила асептическую повязку.</p>
-
-                <div class="conclusion">
-                  <h3>Заключение</h3>
-                  <p>Имплант установлен и стабильно фиксирован, подвижность восстановлена в проектном
-                  объёме. Итог: успешный.</p>
+                <div class="medcard-step">
+                  <span class="step-num">2</span>
+                  <div class="step-body">
+                    <strong>Формирование культи для имплантации.</strong>
+                    Хирург подготовил костную и мягкие ткани культи для установки протеза.
+                    EULR.474 ассистировала при фиксации тканей и поддерживала сухость операционного
+                    поля.
+                  </div>
+                </div>
+                <div class="medcard-step">
+                  <span class="step-num">3</span>
+                  <div class="step-body">
+                    <strong>Установка и фиксация имплантата.</strong>
+                    EULR.176 осуществил позиционирование и фиксацию имплантата к костной культе.
+                    EULR.474 удерживала имплантат в заданном положении, контролировала его соосность
+                    и ассистировала при установке крепёжных элементов.
+                  </div>
+                </div>
+                <div class="medcard-step">
+                  <span class="step-num">4</span>
+                  <div class="step-body">
+                    <strong>Проверка функции и завершение.</strong>
+                    Была оценена подвижность и стабильность имплантата. EULR.176 выполнил послойное
+                    ушивание раны. EULR.474 установила дренаж и наложила асептическую повязку.
+                  </div>
                 </div>
               </div>
-            </details>
+              <div class="medcard-conclusion">
+                <div class="concl-title">Заключение</div>
+                Имплантат установлен и стабильно фиксирован. Достигнут требуемый объём движений.
+                Результат: успешный.
+              </div>
+            </div>
 
-            <details class="report-accordion">
-              <summary>Отчёт о хирургической операции № 3</summary>
-              <div class="report-body">
-                <div class="report-meta">
-                  <span>Дата: 21.09.2157</span>
-                  <span>Шифр: EULR-OP-003</span>
-                  <span>Вмешательство: Остеосинтез при многооскольчатом переломе кости</span>
+            <!-- Отчёт №3 -->
+            <div class="medcard">
+              <div class="medcard-head">
+                <span class="medcard-num">Отчёт о хирургическом вмешательстве № 3</span>
+                <span class="medcard-status">РЕЗУЛЬТАТ: УСПЕШНЫЙ</span>
+              </div>
+              <div class="medcard-meta">
+                <div class="meta-item"><span class="meta-k">Дата:</span><span class="meta-v">21.09.2157</span></div>
+                <div class="meta-item"><span class="meta-k">Шифр:</span><span class="meta-v">EULR-OP-003</span></div>
+                <div class="meta-item" style="grid-column: 1 / -1;"><span class="meta-k">Наименование:</span><span class="meta-v">Остеосинтез многооскольчатого перелома</span></div>
+              </div>
+              <div class="medcard-section">
+                <div class="medcard-section-title">Ход вмешательства</div>
+                <div class="medcard-step">
+                  <span class="step-num">1</span>
+                  <div class="step-body">
+                    <strong>Доступ и ревизия зоны перелома.</strong>
+                    Хирург EULR.474 выполнила разметку и обеспечила доступ к зоне перелома, провела
+                    ревизию отломков и оценку их смещения. Ассистент EULR.475 обеспечивала гемостаз,
+                    подачу инструментов и позиционирование конечности.
+                  </div>
                 </div>
-
-                <h3>Ход операции</h3>
-
-                <p><strong>1. Доступ и ревизия зоны перелома.</strong>
-                Хирург EULR.474 выполнила разметку и послойный доступ к зоне повреждения, произвела
-                ревизию отломков и оценку их смещения. Ассистент EULR.475 обеспечивала гемостаз,
-                подачу инструментов и удержание конечности в физиологичном положении.</p>
-
-                <p><strong>2. Репозиция отломков.</strong>
-                Под контролем EULR.474 выполнено сопоставление отломков с восстановлением оси
-                конечности. EULR.475 удерживала отломки в достигнутом положении и ассистировала при
-                временной фиксации.</p>
-
-                <p><strong>3. Остеосинтез.</strong>
-                EULR.474 произвела окончательную фиксацию отломков согласно предоперационному плану.
-                EULR.475 контролировала стабильность конструкции и ассистировала при установке
-                фиксирующих элементов.</p>
-
-                <p><strong>4. Контроль и ушивание.</strong>
-                Выполнена проверка стабильности фиксации и объёма движений. EULR.474 произвела
-                послойное ушивание раны; EULR.475 наложила асептическую повязку и обеспечила
-                иммобилизацию конечности.</p>
-
-                <div class="conclusion">
-                  <h3>Заключение</h3>
-                  <p>Отломки сопоставлены, ось конечности восстановлена, фиксация стабильна.
-                  Итог: успешный.</p>
+                <div class="medcard-step">
+                  <span class="step-num">2</span>
+                  <div class="step-body">
+                    <strong>Репозиция отломков.</strong>
+                    Под контролем EULR.474 проведено сопоставление отломков с восстановлением оси
+                    конечности. EULR.475 стабилизировала отломки в достигнутом положении и
+                    ассистировала при временной фиксации.
+                  </div>
+                </div>
+                <div class="medcard-step">
+                  <span class="step-num">3</span>
+                  <div class="step-body">
+                    <strong>Остеосинтез.</strong>
+                    EULR.474 выполнила окончательную фиксацию отломков в соответствии с
+                    предоперационным планом. EULR.475 контролировала стабильность конструкции и
+                    ассистировала при установке фиксирующих элементов.
+                  </div>
+                </div>
+                <div class="medcard-step">
+                  <span class="step-num">4</span>
+                  <div class="step-body">
+                    <strong>Контроль и закрытие раны.</strong>
+                    Была проведена оценка стабильности фиксации и объёма движений. EULR.474 выполнила
+                    послойное ушивание раны. EULR.475 наложила асептическую повязку и обеспечила
+                    иммобилизацию конечности.
+                  </div>
                 </div>
               </div>
-            </details>
+              <div class="medcard-conclusion">
+                <div class="concl-title">Заключение</div>
+                Отломки сопоставлены, ось конечности восстановлена, достигнута стабильная фиксация.
+                Результат: успешный.
+              </div>
+            </div>
 
           </div>
         </div>
@@ -1470,7 +1577,6 @@
         bootBar.style.setProperty('--w', bootProgress + '%');
         if (bootProgress >= 100) {
           clearInterval(bootInterval);
-          /* Автоматический переход к досье после загрузки */
           setTimeout(openDossier, 600);
         }
       }, 220);
@@ -1488,7 +1594,6 @@
       }, 800);
     }
 
-    /* Переход по клику на экран загрузки */
     var bootEl = document.getElementById('boot');
     if (bootEl) {
       bootEl.addEventListener('click', openDossier);
@@ -1506,9 +1611,7 @@
       viewer.classList.remove('visible');
     }
 
-    /* ПУСТО: все персонажи удалены из взаимоотношений */
     var RELATIONS = [];
-
     var ARCHIVE_PASSWORD = '2157';
 
     function statusClass(status) {
@@ -1550,7 +1653,6 @@
     }
 
     function init() {
-
       var btnDossier = document.getElementById('btnOpenDossier');
       if (btnDossier) btnDossier.addEventListener('click', openDossier);
 
@@ -1600,7 +1702,6 @@
       var relDetailBody = document.getElementById('relDetailBody');
       var relBack = document.getElementById('relBack');
 
-      /* Если список пуст — показываем заглушку */
       if (relGrid) {
         relGrid.innerHTML = '';
         if (RELATIONS.length === 0) {
@@ -1662,7 +1763,7 @@
         });
       }
 
-      /* ===== Архив: пока пуст ===== */
+      /* ===== Архив ===== */
       var archiveInput = document.getElementById('archivePassword');
       var archiveBtn = document.getElementById('archiveSubmit');
       var archiveError = document.getElementById('archiveError');
