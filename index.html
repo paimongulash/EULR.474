@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -1166,19 +1165,23 @@
     z-index: 5;
   }
   
-  /* Колесико сбоку */
+  /* Колесико сбоку (Громкость) */
   .cassette-player .side-wheel {
     position: absolute;
-    right: -6px;
+    right: -8px;
     top: 50%;
     transform: translateY(-50%);
-    width: 20px;
-    height: 40px;
+    width: 24px;
+    height: 50px;
     background: #8a9cbe;
     border: 2px solid var(--blue-dark);
     border-radius: 4px;
     box-shadow: inset -2px 0 0 rgba(0,0,0,.3);
-    z-index: 10;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: ns-resize; /* Курсор для изменения */
   }
   .cassette-player .side-wheel::after {
     content: "";
@@ -1186,6 +1189,25 @@
     top: 4px; bottom: 4px; left: 4px; right: 4px;
     border: 1px dashed rgba(0,0,0,.3);
     border-radius: 2px;
+    background: rgba(0,0,0,.1);
+  }
+  /* Шкала громкости */
+  .cassette-player .side-wheel::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 5px;
+    width: 2px; height: calc(100% - 10px);
+    background: rgba(255,255,255,.2);
+    transform: translateX(-50%);
+  }
+  .cassette-player .volume-indicator {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 12px; height: 2px;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 4px #fff;
+    pointer-events: none;
   }
 
   /* Анимация катушек */
@@ -1560,7 +1582,7 @@
               работой при трансплантации.
             </div>
           </div>
-          
+
           <div class="section">
             <h2>Заключение</h2>
             <div class="row full">
@@ -1852,7 +1874,9 @@
                 </div>
                 
                 <!-- Колесико сбоку -->
-                <div class="side-wheel"></div>
+                <div class="side-wheel" id="volumeWheel" title="Громкость">
+                  <div class="volume-indicator" id="volumeIndicator"></div>
+                </div>
               </div>
               
               <div class="vinyl-hint" id="vinylHint">НАЖМИТЕ · ВОСПРОИЗВЕДЕНИЕ</div>
@@ -1998,6 +2022,38 @@
       });
     }
 
+    /* ==== ЛОГИКА ПЛЕЕРА И ГРОМКОСТИ ==== */
+    var currentVolume = 0.5;
+    var wheel = document.getElementById('volumeWheel');
+    var indicator = document.getElementById('volumeIndicator');
+    
+    // Установка начальной громкости
+    if (audio) {
+      audio.volume = currentVolume;
+    }
+    
+    // Функция обновления визуального индикатора
+    function updateVolumeUI() {
+      if (!indicator) return;
+      // Позиция от 5px до calc(100% - 5px)
+      indicator.style.top = (5 + (1 - currentVolume) * 40) + 'px'; // 40px примерно высота колесика за вычетом отступов
+    }
+    updateVolumeUI();
+
+    // Обработка колесика мыши для изменения громкости
+    if (wheel) {
+      wheel.addEventListener('wheel', function(e) {
+        e.preventDefault(); // Останавливаем скролл страницы
+        if (e.deltaY < 0) {
+          currentVolume = Math.min(1, currentVolume + 0.05);
+        } else {
+          currentVolume = Math.max(0, currentVolume - 0.05);
+        }
+        if (audio) audio.volume = currentVolume;
+        updateVolumeUI();
+      });
+    }
+
     function updateHint() {
       if (!audio || !hint) return;
       var playing = !audio.paused;
@@ -2011,7 +2067,10 @@
     }
 
     if (cassette && audio) {
-      cassette.addEventListener('click', function () {
+      cassette.addEventListener('click', function (e) {
+        // Если кликнули по колесику громкости, не запускаем музыку
+        if (e.target.closest('.side-wheel')) return;
+        
         if (audio.paused) {
           var p = audio.play();
           if (p && p.catch) p.catch(function () {});
@@ -2137,4 +2196,3 @@
 </script>
 </body>
 </html>
-```
