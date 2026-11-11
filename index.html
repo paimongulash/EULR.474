@@ -150,7 +150,7 @@
     padding: 10px;
   }
   
-  /* Эффекты CRT (теперь не перекрывают клики) */
+  /* Эффекты CRT (не перекрывают клики) */
   .crt::before {
     content: "";
     position: absolute;
@@ -199,7 +199,7 @@
     text-shadow: var(--glow);
     animation: bootScreen 1.2s ease-out;
     border-radius: 14px;
-    z-index: 20; /* Выше эффектов CRT */
+    z-index: 20;
   }
   @keyframes bootScreen {
     0% { opacity: 0; transform: scaleY(0.02); filter: brightness(3); }
@@ -1582,7 +1582,7 @@
               работой при трансплантации.
             </div>
           </div>
-          
+
           <div class="section">
             <h2>Заключение</h2>
             <div class="row full">
@@ -1609,7 +1609,7 @@
             <h2>Медицинские отчёты</h2>
             <div class="row full" style="color:var(--lavender-dim); font-size:13px; margin-bottom:14px;">
               Архивные записи о хирургических вмешательствах, в которых EULR.474 принимала участие
-              в качестве ассистента или хирурга. 
+              в качестве ассистента или хирурга.
             </div>
 
             <!-- Отчёт №1 -->
