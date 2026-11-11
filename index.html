@@ -469,58 +469,6 @@
   }
   .archive-content.unlocked { display: flex; }
 
-  /* ===== Постер ===== */
-  .summary-poster-section {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 24px;
-    margin-top: 4px;
-  }
-  .summary-poster {
-    position: relative;
-    width: 100%;
-    max-width: 720px;
-    border: 1px solid var(--lavender-dim);
-    background: var(--blue-dark);
-    padding: 8px;
-    overflow: hidden;
-    aspect-ratio: 16 / 9;
-    border-radius: 6px;
-  }
-  .summary-poster img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    filter: hue-rotate(190deg) saturate(0.8) brightness(0.95);
-    display: block;
-    border: 1px solid rgba(185,167,217,.25);
-    border-radius: 4px;
-  }
-  .summary-poster::before {
-    content: "";
-    position: absolute;
-    inset: 8px;
-    background-image:
-      radial-gradient(circle at 30% 20%, rgba(185,167,217,.08), transparent 40%),
-      radial-gradient(circle at 70% 80%, rgba(185,167,217,.05), transparent 50%);
-    pointer-events: none;
-    z-index: 2;
-    animation: ghost 4s infinite;
-  }
-  .summary-poster::after {
-    content: "";
-    position: absolute;
-    inset: 8px;
-    background: repeating-linear-gradient(0deg,
-      rgba(185,167,217,.09) 0 1px,
-      transparent 1px 3px);
-    pointer-events: none;
-    z-index: 3;
-  }
-
   /* ===== ФОТО В СВОДКЕ ===== */
   .summary-photo-section {
     display: flex;
@@ -544,7 +492,8 @@
     display: block;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    filter: hue-rotate(190deg) saturate(0.85) brightness(0.95);
+    /* ФИЛЬТР УБРАН */
+    filter: none;
     border: 1px solid rgba(185,167,217,.25);
     border-radius: 4px;
   }
@@ -1379,7 +1328,6 @@
     .row.full { font-size: 14px; }
     .tab { padding: 6px 10px; font-size: 10px; letter-spacing: 1px; }
 
-    .summary-poster { max-width: 100%; aspect-ratio: 4 / 3; }
     .summary-photo { max-width: 100%; }
 
     .relation-grid { grid-template-columns: 1fr; }
@@ -1457,6 +1405,7 @@
               <h2>Базовые параметры</h2>
               <div class="row"><span class="k">Класс:</span><span class="v">Replika — EULR</span></div>
               <div class="row"><span class="k">Серия:</span><span class="v">Eule // "Сова"</span></div>
+              <div class="row"><span class="k">Место сборки:</span><span class="v">Хаймат</span></div>
               <div class="row"><span class="k">Назначение:</span><span class="v">Оказание медицинской помощи / Работа с бумагами и отчётами</span></div>
               <div class="row"><span class="k">Статус:</span><span class="v ok">АКТИВЕН</span></div>
               <div class="row"><span class="k">Приписка:</span><span class="v">ERES — 427</span></div>
@@ -1568,12 +1517,6 @@
             </div>
           </div>
 
-          <div class="section summary-poster-section">
-            <div class="summary-poster">
-              <img src="eule_poster.png" alt="EULR.474 // Сова">
-            </div>
-          </div>
-
           <div class="section">
             <h2>Происхождение и служба на Хаймате</h2>
             <div class="row full">
@@ -1623,21 +1566,6 @@
             </div>
           </div>
 
-          <div class="section">
-            <h2>Личное</h2>
-            <div class="row full">
-              На Хаймате Сова нашла утешение в игре на скрипке. В свободные минуты между
-              операциями она занималась музыкой, что помогало ей восстанавливаться и справляться
-              с эмоциональными нагрузками. Особенно ей запомнилась одна из её коллег, которая
-              показалась ей более открытой и дружелюбной. Со временем между ними установились
-              тёплые сестринские отношения.
-            </div>
-            <div class="row full">
-              Перед своим отъездом на ERES-427, старшая сестра, вдохновлённая искренней
-              привязанностью Совы к музыке, потратила половину своего жалования на особый подарок.
-              С тех пор её волосы украшали изящные заколки в виде белого лотоса, которые стали
-              для неё символом поддержки и заботы.
-            </div>
             <div class="row full">
               Коллеги по медицинскому отделу замечали за Совой одну милую особенность: она часто
               наклоняла голову набок, когда проявляла интерес к чему-то новому, и по очереди
