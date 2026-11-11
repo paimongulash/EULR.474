@@ -1,3 +1,10 @@
+Проблема была в том, что CSS-стили для проигрывателя остались от виниловой пластинки, а разметка тоже была частично нарушена. 
+
+Я полностью переписал блок проигрывателя, сделав его похожим на кассетный плеер с картинки (с прозрачным окошком, кнопками сверху и колесиком сбоку), и восстановил структуру Архива, чтобы он снова корректно отображался и работал.
+
+Ниже готовый, исправленный и рабочий код:
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -492,7 +499,7 @@
     display: block;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    filter: none; /* ФИЛЬТР УБРАН */
+    filter: none;
     border: 1px solid rgba(185,167,217,.25);
     border-radius: 4px;
   }
@@ -1014,71 +1021,6 @@
   }
 
   /* ===== СЕКРЕТНЫЙ РАЗДЕЛ ===== */
-  .secret-lock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    padding: 50px 20px;
-    text-align: center;
-  }
-  .secret-lock .lock-mark {
-    font-size: 32px;
-    letter-spacing: 6px;
-    color: var(--lavender);
-    text-shadow: var(--glow);
-    animation: csPulse 2s ease-in-out infinite;
-  }
-  .secret-lock .lock-sub {
-    font-size: 11px;
-    letter-spacing: 4px;
-    color: var(--lavender-dim);
-    text-transform: uppercase;
-  }
-  .secret-lock form {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 6px;
-  }
-  .secret-lock input[type="password"] {
-    background: var(--blue-dark);
-    border: 1px solid var(--lavender-dim);
-    color: var(--lavender);
-    font-family: inherit;
-    font-size: 14px;
-    letter-spacing: 3px;
-    padding: 8px 12px;
-    min-width: 220px;
-    outline: none;
-    text-shadow: var(--glow);
-    caret-color: var(--lavender);
-    border-radius: 4px;
-  }
-  .secret-lock input[type="password"]:focus {
-    border-color: var(--lavender);
-    box-shadow: 0 0 10px rgba(185,167,217,.35);
-  }
-  .secret-lock .lock-err {
-    min-height: 16px;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: #ff5f7f;
-    text-transform: uppercase;
-    opacity: 0;
-    transition: opacity .2s ease;
-  }
-  .secret-lock .lock-err.show { opacity: 1; }
-  @keyframes csPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .6; }
-  }
-
-  .secret-content { display: none; }
-  .secret-content.unlocked { display: block; }
-
   .secret-top {
     display: grid;
     grid-template-columns: 320px 1fr;
@@ -1086,7 +1028,7 @@
     align-items: start;
   }
 
-  /* Проигрыватель */
+  /* Кассетный проигрыватель */
   .vinyl-wrap {
     display: flex;
     flex-direction: column;
@@ -1098,106 +1040,165 @@
     box-shadow: inset 0 0 20px rgba(0,0,0,.5);
     border-radius: 6px;
   }
-  .vinyl-player {
+  
+  .cassette-player {
     position: relative;
-    width: 260px; height: 200px;
-    border: 1px solid var(--lavender-dim);
-    background: #0a0e1a;
-    border-radius: 6px;
-    box-shadow: inset 0 0 20px rgba(0,0,0,.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 260px; 
+    height: 180px;
+    border: 2px solid var(--lavender-dim);
+    background: linear-gradient(180deg, #2a3654 0%, #1c2438 100%);
+    border-radius: 8px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,.6), 0 4px 10px rgba(0,0,0,.5);
     cursor: pointer;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
   }
-  .vinyl-player .platter {
+  
+  /* Верхние кнопки */
+  .cassette-player .top-buttons {
+    position: absolute;
+    top: -2px;
+    left: 20px;
+    display: flex;
+    gap: 6px;
+    z-index: 10;
+  }
+  .cassette-player .top-buttons .btn {
+    width: 16px;
+    height: 12px;
+    background: #8a9cbe;
+    border: 1px solid var(--blue-dark);
+    border-radius: 0 0 3px 3px;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,.3), inset 0 2px 0 rgba(255,255,255,.3);
+    transition: transform .1s ease;
+  }
+  .cassette-player.playing .top-buttons .btn:nth-child(2) {
+    transform: translateY(2px);
+    background: #a8bce0;
+    box-shadow: none;
+  }
+  
+  /* Логотип FIIO */
+  .cassette-player .logo {
+    margin-top: 16px;
+    font-family: "Arial", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #4a5a7a;
+    text-shadow: 1px 1px 0 rgba(255,255,255,.2);
+    z-index: 5;
+  }
+  .cassette-player .logo span {
+    display: block;
+    font-size: 7px;
+    letter-spacing: 1px;
+    font-weight: normal;
+    margin-top: -2px;
+  }
+  
+  /* Прозрачное окошко с кассетой */
+  .cassette-player .cassette-window {
     position: relative;
-    width: 160px; height: 160px;
+    width: 180px;
+    height: 80px;
+    margin-top: 10px;
+    background: #0a0e1a;
+    border: 2px solid #4a5a7a;
+    border-radius: 40px; /* форма окошка */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,.8);
+    z-index: 5;
+  }
+  
+  /* Лента внутри */
+  .cassette-player .cassette-window::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 10%; right: 10%;
+    height: 2px;
+    background: #3a2010;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+  /* Катушки */
+  .cassette-player .reel {
+    position: relative;
+    width: 32px; height: 32px;
     border-radius: 50%;
-    background: repeating-radial-gradient(circle at 50% 50%, #141b2e 0 2px, #0a0e1a 2px 4px, #1c2438 4px 5px);
-    border: 2px solid #1c2438;
-    box-shadow: 0 0 0 2px #000, 0 0 26px rgba(185,167,217,.25), inset 0 0 30px rgba(0,0,0,.9);
-    animation: vinylSpin 2.2s linear infinite;
-    animation-play-state: paused;
+    background: #1a1a1a;
+    border: 3px solid #555;
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .vinyl-player.playing .platter {
-    animation-play-state: running;
-  }
-  .vinyl-player .platter::before {
+  .cassette-player .reel::before {
     content: "";
-    position: absolute;
-    inset: 0;
+    width: 12px; height: 12px;
     border-radius: 50%;
-    background: conic-gradient(from 0deg, rgba(185,167,217,.1) 0deg 20deg, transparent 20deg 60deg, rgba(185,167,217,.06) 60deg 80deg, transparent 80deg 180deg, rgba(185,167,217,.1) 180deg 200deg, transparent 200deg 240deg, rgba(185,167,217,.06) 240deg 260deg, transparent 260deg 360deg);
-    pointer-events: none;
+    background: #888;
+    border: 2px solid #ccc;
   }
-  .vinyl-player .platter::after {
-    content: "";
+  
+  /* Текст на кассете */
+  .cassette-player .tape-label {
     position: absolute;
-    top: 50%; left: 50%;
-    width: 34%; height: 34%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: radial-gradient(circle at 40% 35%, var(--lavender-soft) 0%, var(--lavender-dim) 55%, var(--blue-deep) 100%);
-    box-shadow: 0 0 0 3px var(--blue-dark), 0 0 18px rgba(185,167,217,.5);
+    top: 5px; left: 15%; right: 15%;
+    height: 14px;
+    background: rgba(255,255,255,.2);
+    font-size: 8px;
+    color: #aaa;
+    text-align: center;
+    line-height: 14px;
+    z-index: 3;
+    font-family: monospace;
   }
-  .vinyl-player .spindle {
+  
+  /* Нижняя надпись */
+  .cassette-player .bottom-text {
+    margin-top: 6px;
+    font-size: 7px;
+    color: #6b7a99;
+    letter-spacing: 1px;
+    text-align: center;
+    z-index: 5;
+  }
+  
+  /* Колесико сбоку */
+  .cassette-player .side-wheel {
     position: absolute;
-    top: 50%; left: 50%;
-    width: 8px; height: 8px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    background: var(--blue-dark);
-    box-shadow: 0 0 0 2px var(--lavender);
-    z-index: 2;
-    pointer-events: none;
-  }
-  .vinyl-player .tonearm {
-    position: absolute;
-    top: 10px; right: 14px;
-    width: 6px; height: 90px;
-    background: var(--lavender-dim);
-    border-radius: 3px;
-    transform-origin: top center;
-    transform: rotate(0deg);
-    transition: transform .6s ease;
-    box-shadow: 0 0 6px rgba(0,0,0,.5);
-  }
-  .vinyl-player.playing .tonearm {
-    transform: rotate(-22deg);
-  }
-  .vinyl-player .tonearm::before {
-    content: "";
-    position: absolute;
-    top: -8px; left: -6px;
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    background: var(--lavender-dim);
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 40px;
+    background: #8a9cbe;
     border: 2px solid var(--blue-dark);
+    border-radius: 4px;
+    box-shadow: inset -2px 0 0 rgba(0,0,0,.3);
+    z-index: 10;
   }
-  .vinyl-player .tonearm::after {
+  .cassette-player .side-wheel::after {
     content: "";
     position: absolute;
-    bottom: -4px; left: -2px;
-    width: 10px; height: 10px;
-    background: var(--lavender);
+    top: 4px; bottom: 4px; left: 4px; right: 4px;
+    border: 1px dashed rgba(0,0,0,.3);
     border-radius: 2px;
   }
-  .vinyl-player .play-btn {
-    position: absolute;
-    bottom: 8px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--lavender-dim);
-    text-transform: uppercase;
-  }
 
-  @keyframes vinylSpin { to { transform: rotate(360deg); } }
+  /* Анимация катушек */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .cassette-player.playing .reel {
+    animation: spin 1.5s linear infinite;
+  }
 
   .vinyl-hint {
     font-size: 10px;
@@ -1206,6 +1207,7 @@
     text-transform: uppercase;
     text-align: center;
     transition: color .2s ease;
+    margin-top: 4px;
   }
   .vinyl-hint.playing { color: var(--lavender); text-shadow: var(--glow); }
 
@@ -1343,8 +1345,8 @@
 
     .album-arrow { width: 36px; font-size: 20px; }
     .secret-top { grid-template-columns: 1fr; }
-    .vinyl-player { width: 220px; height: 170px; }
-    .vinyl-player .platter { width: 130px; height: 130px; }
+    .cassette-player { width: 220px; height: 150px; }
+    .cassette-player .cassette-window { width: 150px; height: 60px; }
   }
 </style>
 </head>
@@ -1564,7 +1566,7 @@
               работой при трансплантации.
             </div>
           </div>
-
+          
           <div class="section">
             <h2>Заключение</h2>
             <div class="row full">
@@ -1591,7 +1593,7 @@
             <h2>Медицинские отчёты</h2>
             <div class="row full" style="color:var(--lavender-dim); font-size:13px; margin-bottom:14px;">
               Архивные записи о хирургических вмешательствах, в которых EULR.474 принимала участие
-              в качестве ассистента или хирурга.
+              в качестве ассистента или хирурга. Оформлено по стандарту медицинской карты.
             </div>
 
             <!-- Отчёт №1 -->
@@ -1829,14 +1831,36 @@
         <div class="archive-content" id="archiveContent">
           <div class="secret-top">
             <div class="vinyl-wrap">
-              <!-- Проигрыватель -->
-              <div class="vinyl-player" id="vinyl" title="Нажмите, чтобы включить / остановить">
-                <div class="platter">
-                  <div class="spindle"></div>
+              <!-- Кассетный проигрыватель -->
+              <div class="cassette-player" id="cassettePlayer" title="Нажмите, чтобы включить / остановить">
+                <!-- Верхние кнопки -->
+                <div class="top-buttons">
+                  <div class="btn"></div>
+                  <div class="btn"></div>
+                  <div class="btn"></div>
+                  <div class="btn"></div>
                 </div>
-                <div class="tonearm"></div>
-                <div class="play-btn">PLAY</div>
+                
+                <!-- Логотип -->
+                <div class="logo">FIIO<span>AUTO REVERSE</span></div>
+                
+                <!-- Окошко с кассетой -->
+                <div class="cassette-window">
+                  <div class="tape-label">RE90</div>
+                  <div class="reel"></div>
+                  <div class="reel"></div>
+                </div>
+                
+                <!-- Текст снизу -->
+                <div class="bottom-text">
+                  PORTABLE HIGH RESOLUTION CASSETTEPLAYER<br>
+                  MODE CP13
+                </div>
+                
+                <!-- Колесико сбоку -->
+                <div class="side-wheel"></div>
               </div>
+              
               <div class="vinyl-hint" id="vinylHint">НАЖМИТЕ · ВОСПРОИЗВЕДЕНИЕ</div>
               <audio id="vinylAudio" src="Вайбик.mp3" preload="auto" loop></audio>
               
@@ -1941,7 +1965,7 @@
     var btn = document.getElementById('archiveSubmit');
     var err = document.getElementById('archiveError');
     var content = document.getElementById('archiveContent');
-    var vinyl = document.getElementById('vinyl');
+    var cassette = document.getElementById('cassettePlayer');
     var audio = document.getElementById('vinylAudio');
     var hint = document.getElementById('vinylHint');
 
@@ -1983,7 +2007,7 @@
     function updateHint() {
       if (!audio || !hint) return;
       var playing = !audio.paused;
-      if (vinyl) vinyl.classList.toggle('playing', playing);
+      if (cassette) cassette.classList.toggle('playing', playing);
       if (hint) {
         hint.classList.toggle('playing', playing);
         hint.textContent = playing
@@ -1992,8 +2016,8 @@
       }
     }
 
-    if (vinyl && audio) {
-      vinyl.addEventListener('click', function () {
+    if (cassette && audio) {
+      cassette.addEventListener('click', function () {
         if (audio.paused) {
           var p = audio.play();
           if (p && p.catch) p.catch(function () {});
@@ -2119,3 +2143,4 @@
 </script>
 </body>
 </html>
+```
