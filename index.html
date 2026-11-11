@@ -57,6 +57,7 @@
     background: #0a0e1a;
     overflow: hidden;
     transition: opacity .8s ease, transform .8s ease;
+    cursor: pointer;
   }
   .boot.done { opacity: 0; transform: scale(1.04); pointer-events: none; }
 
@@ -85,251 +86,6 @@
     background-size: 40px 40px;
     pointer-events: none;
     z-index: 2;
-  }
-
-  .desktop-icons {
-    position: absolute;
-    top: 22px; left: 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 26px;
-    z-index: 60;
-  }
-  .desktop-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    width: 96px;
-    color: var(--lavender-soft);
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-align: center;
-    text-shadow: 1px 1px 0 rgba(0,0,0,.7);
-    cursor: pointer;
-    user-select: none;
-    transition: transform .1s ease;
-    position: relative;
-    z-index: 60;
-  }
-  .desktop-icon:hover { transform: translate(-1px, -1px); }
-  .desktop-icon:hover span {
-    color: var(--lavender);
-    text-shadow: 0 0 6px rgba(185,167,217,.8), 1px 1px 0 rgba(0,0,0,.7);
-  }
-  .desktop-icon:active { transform: translate(1px, 1px); }
-  .desktop-icon svg {
-    width: 38px; height: 32px;
-    filter: drop-shadow(2px 2px 0 rgba(0,0,0,.55));
-    image-rendering: pixelated;
-    pointer-events: none;
-  }
-
-  .win {
-    position: absolute;
-    background: var(--win-face);
-    border: 2px solid var(--win-border);
-    box-shadow:
-      4px 4px 0 0 rgba(0,0,0,.55),
-      inset 1px 1px 0 0 rgba(255,255,255,.1),
-      inset -1px -1px 0 0 rgba(0,0,0,.25);
-    image-rendering: pixelated;
-    z-index: 10;
-    border-radius: 3px;
-  }
-
-  .win .titlebar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4px 6px;
-    background: var(--win-title);
-    color: var(--lavender-soft);
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 0 rgba(0,0,0,.5);
-    border-bottom: 2px solid var(--win-border);
-    transition: background .15s ease;
-    border-radius: 2px 2px 0 0;
-  }
-  .win .titlebar .name { font-weight: bold; }
-  .win .titlebar .btns { display: flex; gap: 3px; }
-  .win .titlebar .btns span {
-    display: block;
-    width: 14px; height: 14px;
-    background: var(--win-face);
-    border: 1px solid var(--win-border);
-    box-shadow:
-      inset 1px 1px 0 0 rgba(255,255,255,.15),
-      inset -1px -1px 0 0 rgba(0,0,0,.35);
-    color: var(--win-text);
-    font-size: 10px;
-    line-height: 12px;
-    text-align: center;
-    cursor: default;
-    border-radius: 2px;
-  }
-  .win .titlebar .btns span.close { cursor: pointer; }
-  .win .titlebar .btns span.close:hover { background: #ff6a8a; color: #1a0a10; }
-
-  .win .body {
-    padding: 10px 12px;
-    color: var(--win-text);
-    font-family: "Courier New", monospace;
-    font-size: 13px;
-    line-height: 1.35;
-  }
-
-  .ok-btn {
-    display: inline-block;
-    padding: 8px 18px;
-    background: var(--win-face);
-    border: 2px solid var(--win-border);
-    box-shadow:
-      inset 2px 2px 0 0 rgba(255,255,255,.12),
-      inset -2px -2px 0 0 rgba(0,0,0,.35),
-      3px 3px 0 0 rgba(0,0,0,.45);
-    color: var(--win-text);
-    font-family: inherit;
-    font-size: 14px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    image-rendering: pixelated;
-    transition: none;
-    border-radius: 3px;
-  }
-  .ok-btn:active {
-    box-shadow:
-      inset -2px -2px 0 0 rgba(255,255,255,.12),
-      inset 2px 2px 0 0 rgba(0,0,0,.35),
-      1px 1px 0 0 rgba(0,0,0,.45);
-    transform: translate(2px, 2px);
-  }
-
-  .win-ok      { top: 40%; left: 12%; width: 260px; }
-  .win-night   { top: 40%; left: 40%; width: 340px; animation: winShake 4s infinite; }
-  .win-dream   { top: 62%; left: 22%; width: 260px; }
-  .win-notes   { top: 58%; left: 55%; width: 320px; }
-
-  .win-notes .body {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 14px 10px;
-  }
-  .note {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    font-size: 10px;
-    color: var(--win-text);
-    text-align: center;
-    width: 90px;
-  }
-  .note svg {
-    width: 42px; height: 38px;
-    filter: drop-shadow(1px 1px 0 rgba(0,0,0,.35));
-  }
-
-  @keyframes winShake {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-1px, 1px); }
-  }
-
-  .dream-body { display: flex; align-items: center; gap: 12px; }
-
-  .win-dream {
-    cursor: pointer;
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .win-dream:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      6px 6px 0 0 rgba(0,0,0,.65),
-      inset 1px 1px 0 0 rgba(255,255,255,.1),
-      inset -1px -1px 0 0 rgba(0,0,0,.25),
-      0 0 14px rgba(185,167,217,.35);
-  }
-  .win-dream:active {
-    transform: translateY(0);
-    box-shadow:
-      2px 2px 0 0 rgba(0,0,0,.65),
-      inset 1px 1px 0 0 rgba(255,255,255,.1),
-      inset -1px -1px 0 0 rgba(0,0,0,.25);
-  }
-  .win-dream:hover .titlebar { background: #34406b; }
-
-  /* ===== Окно FKLR ===== */
-  .win-fkler {
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 900px;
-    max-width: 96vw;
-    display: none;
-    z-index: 80;
-    animation: winOpen .25s ease-out;
-  }
-  .win-fkler.visible { display: block; }
-
-  @keyframes winOpen {
-    0%   { opacity: 0; transform: translate(-50%, -50%) scale(.9); }
-    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  }
-
-  .win-fkler .body {
-    padding: 0;
-    background: var(--blue-dark);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .win-fkler .img-wrap {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    max-height: 78vh;
-    overflow: hidden;
-    background: var(--blue-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .win-fkler .img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    filter: hue-rotate(190deg) saturate(0.8) brightness(0.9);
-    display: block;
-  }
-
-  .win-fkler .img-wrap::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(0deg,
-      rgba(185,167,217,.09) 0 1px,
-      transparent 1px 3px);
-    pointer-events: none;
-  }
-
-  .win-fkler .caption {
-    width: 100%;
-    padding: 10px 12px;
-    text-align: center;
-    font-size: 12px;
-    letter-spacing: 3px;
-    color: var(--lavender-dim);
-    background: #121828;
-    border-top: 2px solid var(--win-border);
   }
 
   .boot .loading {
@@ -556,6 +312,7 @@
 
   .tab-content > .data { margin-top: 18px; }
 
+  /* Портрет без синего фильтра */
   .portrait {
     border: 1px solid var(--lavender-dim);
     background: var(--blue-dark);
@@ -577,9 +334,9 @@
     object-position: center top;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    filter: hue-rotate(200deg) saturate(0.8) brightness(0.9);
-    mix-blend-mode: screen;
-    opacity: 0.92;
+    filter: none;             /* убран синий фильтр */
+    mix-blend-mode: normal;   /* убран режим screen */
+    opacity: 1;               /* полная непрозрачность */
     display: block;
     position: relative;
     z-index: 1;
@@ -591,8 +348,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      radial-gradient(circle at 30% 20%, rgba(185,167,217,.08), transparent 40%),
-      radial-gradient(circle at 70% 80%, rgba(185,167,217,.05), transparent 50%);
+      radial-gradient(circle at 30% 20%, rgba(185,167,217,.06), transparent 40%),
+      radial-gradient(circle at 70% 80%, rgba(185,167,217,.04), transparent 50%);
     pointer-events: none;
     z-index: 2;
     animation: ghost 4s infinite;
@@ -1252,107 +1009,6 @@
   <img class="boot-bg" src="Загрузка.png" alt="">
   <div class="grid-overlay"></div>
 
-  <div class="desktop-icons">
-    <div class="desktop-icon" data-action="dossier">
-      <svg viewBox="0 0 38 32" shape-rendering="crispEdges">
-        <path d="M2 2h14l3 4h17v22H2z" fill="#d8ccef" stroke="#3d4a6b" stroke-width="1.5"/>
-        <path d="M2 8h34" stroke="#3d4a6b" stroke-width="1.5"/>
-      </svg>
-      <span>Досье EULR.474</span>
-    </div>
-    <div class="desktop-icon" data-action="fkler" id="iconFkler">
-      <svg viewBox="0 0 38 32" shape-rendering="crispEdges">
-        <path d="M2 2h14l3 4h17v22H2z" fill="#b9a7d9" stroke="#3d4a6b" stroke-width="1.5"/>
-        <path d="M2 8h34" stroke="#3d4a6b" stroke-width="1.5"/>
-      </svg>
-      <span>Нюдсы FKLR</span>
-    </div>
-  </div>
-
-  <div class="win win-ok">
-    <div class="titlebar">
-      <span class="name">terminal</span>
-      <div class="btns"><span>_</span><span>□</span><span>×</span></div>
-    </div>
-    <div class="body" style="text-align:center; padding: 22px 12px;">
-      <button class="ok-btn" id="btnOpenDossier">OPEN DOSSIER</button>
-    </div>
-  </div>
-
-  <div class="win win-night">
-    <div class="titlebar">
-      <span class="name">message.txt</span>
-      <div class="btns"><span>_</span><span>□</span><span>×</span></div>
-    </div>
-    <div class="body" style="padding: 30px 12px; text-align:center;">
-      <span style="color:#b9a7d9; font-size:18px; letter-spacing:4px;">ТОЛЬКО ДЛЯ СБ</span>
-    </div>
-  </div>
-
-  <div class="win win-dream" id="spamWindow" data-href="https://sites.google.com/view/kilidan" title="Открыть: kilidan">
-    <div class="titlebar">
-      <span class="name">spam.exe</span>
-      <div class="btns"><span>_</span><span>□</span><span>×</span></div>
-    </div>
-    <div class="body dream-body">
-      <svg viewBox="0 0 24 32" width="26" height="34" shape-rendering="crispEdges">
-        <path d="M4 2h16v3H4zM4 5h2v2H4zM18 5h2v2h-2zM2 7h2v18H2zM20 7h2v18h-2zM4 25h2v2H4zM18 25h2v2h-2zM4 27h16v3H4z"
-              fill="none" stroke="#c8d0e8" stroke-width="1"/>
-        <path d="M8 10h3v3H8zM13 10h3v3h-3zM8 18h3v3H8zM13 18h3v3h-3z" fill="#c8d0e8"/>
-      </svg>
-      <span style="color:#c8d0e8; font-size:13px; letter-spacing:2px; line-height:1.3;">
-        Горячий ADLR<br>всего лишь 200 метров от вас..
-      </span>
-    </div>
-  </div>
-
-  <div class="win win-notes">
-    <div class="titlebar">
-      <span class="name">documents</span>
-      <div class="btns"><span>_</span><span>□</span><span>×</span></div>
-    </div>
-    <div class="body">
-      <div class="note">
-        <svg viewBox="0 0 42 38" shape-rendering="crispEdges">
-          <path d="M3 2h24l8 8v26H3z" fill="#d8ccef" stroke="#3d4a6b" stroke-width="1.5"/>
-          <path d="M27 2v8h8" fill="none" stroke="#3d4a6b" stroke-width="1.5"/>
-        </svg>
-        <span>1984 как стиль жизни</span>
-      </div>
-      <div class="note">
-        <svg viewBox="0 0 42 38" shape-rendering="crispEdges">
-          <path d="M3 2h24l8 8v26H3z" fill="#8fa8c9" stroke="#3d4a6b" stroke-width="1.5"/>
-          <path d="M27 2v8h8" fill="none" stroke="#3d4a6b" stroke-width="1.5"/>
-        </svg>
-        <span>Отдых после работы</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="win win-fkler" id="fklerViewer">
-    <div class="titlebar">
-      <span class="name">fkler_viewer.exe</span>
-      <div class="btns">
-        <span>_</span>
-        <span>□</span>
-        <span class="close" id="btnCloseFkler">×</span>
-      </div>
-    </div>
-    <div class="body">
-      <div class="img-wrap">
-        <img src="fklerv2.png" alt="FKLR">
-      </div>
-      <div class="caption">FKLR // ПРОСМОТР РАЗРЕШЁН</div>
-    </div>
-  </div>
-
-  <div class="cursor-arrow">
-    <svg viewBox="0 0 20 24" shape-rendering="crispEdges">
-      <path d="M2 1 L2 19 L7 15 L10 22 L13 21 L10 14 L16 14 Z"
-            fill="#d8ccef" stroke="#1a0a10" stroke-width="1.5"/>
-    </svg>
-  </div>
-
   <div class="loading">
     <span>ЗАГРУЗКА AEON-OS...</span>
     <div class="bar" id="bootBar"></div>
@@ -1811,7 +1467,11 @@
       var bootInterval = setInterval(function () {
         bootProgress = Math.min(100, bootProgress + 4 + Math.random() * 6);
         bootBar.style.setProperty('--w', bootProgress + '%');
-        if (bootProgress >= 100) clearInterval(bootInterval);
+        if (bootProgress >= 100) {
+          clearInterval(bootInterval);
+          /* Автоматический переход к досье после загрузки */
+          setTimeout(openDossier, 600);
+        }
       }, 220);
     }
 
@@ -1819,11 +1479,18 @@
       var boot = document.getElementById('boot');
       var dossier = document.getElementById('dossier');
       if (!boot || !dossier) return;
+      if (boot.classList.contains('done')) return;
       boot.classList.add('done');
       setTimeout(function () {
         boot.style.display = 'none';
         dossier.classList.add('visible');
       }, 800);
+    }
+
+    /* Переход по клику на экран загрузки */
+    var bootEl = document.getElementById('boot');
+    if (bootEl) {
+      bootEl.addEventListener('click', openDossier);
     }
 
     function openFkler() {
