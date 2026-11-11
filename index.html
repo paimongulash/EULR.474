@@ -712,173 +712,18 @@
   }
   .archive-content.unlocked { display: flex; }
 
-  /* ===== Альбом ===== */
-  .album {
+  .archive-empty {
     flex: 1 1 auto;
     min-height: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-  }
-
-  .album-stage {
-    flex: 1 1 auto;
-    min-height: 0;
-    display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
     gap: 10px;
-  }
-
-  .album-arrow {
-    flex: 0 0 auto;
-    width: 46px;
-    background: transparent;
-    border: 1px solid var(--lavender-dim);
-    color: var(--lavender);
-    font-family: inherit;
-    font-size: 26px;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background .12s ease, color .12s ease, box-shadow .12s ease;
-    user-select: none;
-    padding: 0;
-    image-rendering: pixelated;
-    border-radius: 4px;
-  }
-  .album-arrow:hover {
-    background: var(--lavender-dim);
-    color: var(--lavender-soft);
-    box-shadow: 0 0 10px rgba(185,167,217,.35);
-  }
-  .album-arrow:active {
-    transform: translate(1px, 1px);
-    box-shadow: 0 0 0 rgba(185,167,217,0);
-  }
-  .album-arrow:disabled {
-    opacity: .25;
-    cursor: default;
-    background: transparent;
     color: var(--lavender-dim);
-    box-shadow: none;
-  }
-  .album-arrow:disabled:hover { background: transparent; }
-
-  .album-frame {
-    position: relative;
-    flex: 1 1 auto;
-    min-width: 0;
-    border: 1px solid var(--lavender-dim);
-    background: var(--blue-dark);
-    padding: 8px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-  }
-
-  .album-photo {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .album-photo img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    object-position: center;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    filter: hue-rotate(190deg) saturate(0.8) brightness(0.95);
-    display: block;
-    animation: albumFade .3s ease;
-  }
-
-  @keyframes albumFade {
-    0%   { opacity: 0; transform: scale(.98); }
-    100% { opacity: 1; transform: scale(1); }
-  }
-
-  .album-photo::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(0deg,
-      rgba(185,167,217,.09) 0 1px,
-      transparent 1px 3px);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .album-photo::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 30% 20%, rgba(185,167,217,.08), transparent 40%),
-      radial-gradient(circle at 70% 80%, rgba(185,167,217,.05), transparent 50%);
-    pointer-events: none;
-    z-index: 3;
-    animation: ghost 4s infinite;
-  }
-
-  .album-caption {
-    flex: 0 0 auto;
-    text-align: center;
-    font-size: 11px;
+    font-size: 14px;
     letter-spacing: 3px;
-    color: var(--lavender-dim);
-    padding: 4px 0;
-    min-height: 18px;
-  }
-
-  .album-counter {
-    flex: 0 0 auto;
     text-align: center;
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: var(--lavender);
-    text-shadow: var(--glow);
-    padding-top: 6px;
-    border-top: 1px dashed var(--lavender-dim);
-  }
-
-  .album-dots {
-    flex: 0 0 auto;
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    flex-wrap: wrap;
-    padding-top: 4px;
-  }
-
-  .album-dot {
-    width: 8px;
-    height: 8px;
-    background: transparent;
-    border: 1px solid var(--lavender-dim);
-    cursor: pointer;
-    padding: 0;
-    transition: background .12s ease;
-    image-rendering: pixelated;
-    border-radius: 2px;
-  }
-  .album-dot:hover { background: var(--lavender-dim); }
-  .album-dot.active {
-    background: var(--lavender);
-    border-color: var(--lavender);
-    box-shadow: 0 0 6px rgba(185,167,217,.6);
   }
 
   /* ===== Постер ===== */
@@ -1535,10 +1380,12 @@
       <div class="tabs" id="tabs">
         <button class="tab active" data-tab="dossier">Досье модуля</button>
         <button class="tab" data-tab="summary">Краткая сводка</button>
-        <button class="tab" data-tab="relations">Взаимоотношения на комплексе</button>
+        <button class="tab" data-tab="reports">Медицинские отчёты</button>
+        <button class="tab" data-tab="relations">Взаимоотношения</button>
         <button class="tab locked" data-tab="archive">Архив</button>
       </div>
 
+      <!-- ===================== ДОСЬЕ МОДУЛЯ ===================== -->
       <div class="tab-content active" id="tab-dossier">
         <div class="grid">
           <div class="portrait">
@@ -1655,6 +1502,7 @@
         </div>
       </div>
 
+      <!-- ===================== КРАТКАЯ СВОДКА ===================== -->
       <div class="tab-content" id="tab-summary">
         <div class="data">
           <div class="section summary-poster-section">
@@ -1699,7 +1547,7 @@
             </div>
             <div class="row full">
               Отчёты по этим операциям и занятости модулей направляются совместно с личным делом
-              модуля.
+              модуля. Подробности доступны во вкладке «Медицинские отчёты».
             </div>
             <div class="row full">
               Под руководством старшего фельдшера модуль смог освоить: ведение первичной медицинской
@@ -1713,7 +1561,47 @@
           </div>
 
           <div class="section">
+            <h2>Личное</h2>
+            <div class="row full">
+              На Хаймате Сова нашла утешение в игре на скрипке. В свободные минуты между
+              операциями она занималась музыкой, что помогало ей восстанавливаться и справляться
+              с эмоциональными нагрузками. Особенно ей запомнилась одна из её коллег, которая
+              показалась ей более открытой и дружелюбной. Со временем между ними установились
+              тёплые сестринские отношения.
+            </div>
+            <div class="row full">
+              Перед своим отъездом на ERES-427, старшая сестра, вдохновлённая искренней
+              привязанностью Совы к музыке, потратила половину своего жалования на особый подарок.
+              С тех пор её волосы украшали изящные заколки в виде белого лотоса, которые стали
+              для неё символом поддержки и заботы.
+            </div>
+            <div class="row full">
+              Коллеги по медицинскому отделу замечали за Совой одну милую особенность: она часто
+              наклоняла голову набок, когда проявляла интерес к чему-то новому, и по очереди
+              хлопала глазами, когда её мысли путались. Эти маленькие жесты придавали ей особую
+              индивидуальность и делали её ещё более узнаваемой среди персонала.
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Заключение</h2>
+            <div class="row full">
+              Так завершилась её служба на Хаймате, и впереди её ждала новая глава на объекте
+              ERES-427, где ей предстояло применить свои навыки и знания в новых условиях.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== МЕДИЦИНСКИЕ ОТЧЁТЫ ===================== -->
+      <div class="tab-content" id="tab-reports">
+        <div class="data">
+          <div class="section">
             <h2>Медицинские отчёты</h2>
+            <div class="row full" style="color:var(--lavender-dim); font-size:13px; margin-bottom:14px;">
+              Отчёты по операциям, в которых EULR.474 принимала участие в качестве ассистента или
+              хирурга. Нажми на заголовок, чтобы раскрыть подробности.
+            </div>
 
             <details class="report-accordion">
               <summary>Отчёт о хирургической операции № 1</summary>
@@ -1835,40 +1723,10 @@
             </details>
 
           </div>
-
-          <div class="section">
-            <h2>Личное</h2>
-            <div class="row full">
-              На Хаймате Сова нашла утешение в игре на скрипке. В свободные минуты между
-              операциями она занималась музыкой, что помогало ей восстанавливаться и справляться
-              с эмоциональными нагрузками. Особенно ей запомнилась одна из её коллег, которая
-              показалась ей более открытой и дружелюбной. Со временем между ними установились
-              тёплые сестринские отношения.
-            </div>
-            <div class="row full">
-              Перед своим отъездом на ERES-427, старшая сестра, вдохновлённая искренней
-              привязанностью Совы к музыке, потратила половину своего жалования на особый подарок.
-              С тех пор её волосы украшали изящные заколки в виде белого лотоса, которые стали
-              для неё символом поддержки и заботы.
-            </div>
-            <div class="row full">
-              Коллеги по медицинскому отделу замечали за Совой одну милую особенность: она часто
-              наклоняла голову набок, когда проявляла интерес к чему-то новому, и по очереди
-              хлопала глазами, когда её мысли путались. Эти маленькие жесты придавали ей особую
-              индивидуальность и делали её ещё более узнаваемой среди персонала.
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Заключение</h2>
-            <div class="row full">
-              Так завершилась её служба на Хаймате, и впереди её ждала новая глава на объекте
-              ERES-427, где ей предстояло применить свои навыки и знания в новых условиях.
-            </div>
-          </div>
         </div>
       </div>
 
+      <!-- ===================== ВЗАИМООТНОШЕНИЯ ===================== -->
       <div class="tab-content" id="tab-relations">
         <div class="data relations-wrap" id="relationsWrap">
 
@@ -1910,6 +1768,7 @@
         </div>
       </div>
 
+      <!-- ===================== АРХИВ ===================== -->
       <div class="tab-content" id="tab-archive">
         <div class="archive-lock" id="archiveLock">
           <div class="lock-title">ДОСТУП ОГРАНИЧЕН</div>
@@ -1982,7 +1841,6 @@
     /* ПУСТО: все персонажи удалены из взаимоотношений */
     var RELATIONS = [];
 
-    var ALBUM = [];
     var ARCHIVE_PASSWORD = '2157';
 
     function statusClass(status) {
@@ -2137,72 +1995,6 @@
       }
 
       /* ===== Архив: пока пуст ===== */
-      var albumIdx = 0;
-      var albumImg = document.getElementById('albumImg');
-      var albumCaption = document.getElementById('albumCaption');
-      var albumCounter = document.getElementById('albumCounter');
-      var albumDots = document.getElementById('albumDots');
-      var albumPrev = document.getElementById('albumPrev');
-      var albumNext = document.getElementById('albumNext');
-
-      function renderAlbum() {
-        if (!ALBUM.length) {
-          if (albumImg) { albumImg.removeAttribute('src'); albumImg.alt = ''; }
-          if (albumCaption) albumCaption.textContent = 'Архив пуст';
-          if (albumCounter) albumCounter.textContent = '— / —';
-          if (albumPrev) albumPrev.disabled = true;
-          if (albumNext) albumNext.disabled = true;
-          return;
-        }
-        var item = ALBUM[albumIdx];
-        if (albumImg) { albumImg.src = item.src; albumImg.alt = item.caption || 'Архивное фото'; }
-        if (albumCaption) albumCaption.textContent = item.caption || '';
-        if (albumCounter) {
-          albumCounter.textContent =
-            String(albumIdx + 1).padStart(2, '0') + ' / ' +
-            String(ALBUM.length).padStart(2, '0');
-        }
-        if (albumDots) {
-          var dots = albumDots.querySelectorAll('.album-dot');
-          Array.prototype.forEach.call(dots, function (d, i) {
-            d.classList.toggle('active', i === albumIdx);
-          });
-        }
-        if (albumPrev) albumPrev.disabled = albumIdx === 0;
-        if (albumNext) albumNext.disabled = albumIdx === ALBUM.length - 1;
-      }
-
-      function buildAlbumDots() {
-        if (!albumDots) return;
-        albumDots.innerHTML = '';
-        ALBUM.forEach(function (_, i) {
-          var dot = document.createElement('button');
-          dot.className = 'album-dot';
-          dot.setAttribute('aria-label', 'Фото ' + (i + 1));
-          dot.addEventListener('click', function () {
-            albumIdx = i;
-            renderAlbum();
-          });
-          albumDots.appendChild(dot);
-        });
-      }
-
-      function albumPrevFn() { if (albumIdx > 0) { albumIdx--; renderAlbum(); } }
-      function albumNextFn() { if (albumIdx < ALBUM.length - 1) { albumIdx++; renderAlbum(); } }
-
-      if (albumPrev) albumPrev.addEventListener('click', albumPrevFn);
-      if (albumNext) albumNext.addEventListener('click', albumNextFn);
-
-      document.addEventListener('keydown', function (e) {
-        var archiveTab = document.getElementById('tab-archive');
-        if (!archiveTab || !archiveTab.classList.contains('active')) return;
-        if (e.key === 'ArrowLeft')  { e.preventDefault(); albumPrevFn(); }
-        if (e.key === 'ArrowRight') { e.preventDefault(); albumNextFn(); }
-      });
-
-      buildAlbumDots();
-      renderAlbum();
-
       var archiveInput = document.getElementById('archivePassword');
       var archiveBtn = document.getElementById('archiveSubmit');
       var archiveError = document.getElementById('archiveError');
