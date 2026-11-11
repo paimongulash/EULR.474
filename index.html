@@ -147,9 +147,10 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border-radius: 18px;
     padding: 10px;
   }
+  
+  /* Эффекты CRT (теперь не перекрывают клики) */
   .crt::before {
     content: "";
     position: absolute;
@@ -162,7 +163,6 @@
     pointer-events: none;
     z-index: 10;
     animation: flicker 4s infinite;
-    border-radius: 18px;
   }
   .crt::after {
     content: "";
@@ -171,7 +171,6 @@
     background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.75) 100%);
     pointer-events: none;
     z-index: 11;
-    border-radius: 18px;
   }
 
   @keyframes flicker {
@@ -200,6 +199,7 @@
     text-shadow: var(--glow);
     animation: bootScreen 1.2s ease-out;
     border-radius: 14px;
+    z-index: 20; /* Выше эффектов CRT */
   }
   @keyframes bootScreen {
     0% { opacity: 0; transform: scaleY(0.02); filter: brightness(3); }
@@ -1074,7 +1074,7 @@
     box-shadow: none;
   }
   
-  /* Логотип FIIO */
+  /* Логотип AEON */
   .cassette-player .logo {
     margin-top: 16px;
     font-family: "Arial", sans-serif;
@@ -1584,9 +1584,32 @@
           </div>
 
           <div class="section">
+            <h2>Личное</h2>
+            <div class="row full">
+              На Хаймате Сова нашла утешение в игре на скрипке. В свободные минуты между
+              операциями она занималась музыкой, что помогало ей восстанавливаться и справляться
+              с эмоциональными нагрузками. Особенно ей запомнилась одна из её коллег, которая
+              показалась ей более открытой и дружелюбной. Со временем между ними установились
+              тёплые сестринские отношения.
+            </div>
+            <div class="row full">
+              Перед своим отъездом на ERES-427, старшая сестра, вдохновлённая искренней
+              привязанностью Совы к музыке, потратила половину своего жалования на особый подарок.
+              С тех пор её волосы украшали изящные заколки в виде белого лотоса, которые стали
+              для неё символом поддержки и заботы.
+            </div>
+            <div class="row full">
+              Коллеги по медицинскому отделу замечали за Совой одну милую особенность: она часто
+              наклоняла голову набок, когда проявляла интерес к чему-то новому, и по очереди
+              хлопала глазами, когда её мысли путались. Эти маленькие жесты придавали ей особую
+              индивидуальность и делали её ещё более узнаваемой среди персонала.
+            </div>
+          </div>
+
+          <div class="section">
             <h2>Заключение</h2>
             <div class="row full">
-              По экстренной квоте модуль EULR.474 совместно с модулем EULR.475 были перенаправленны из госпиталя на новый объект, и впереди её ждала новая глава на объекте
+              Так завершилась её служба на Хаймате, и впереди её ждала новая глава на объекте
               ERES-427, где ей предстояло применить свои навыки и знания в новых условиях.
             </div>
           </div>
@@ -1609,7 +1632,7 @@
             <h2>Медицинские отчёты</h2>
             <div class="row full" style="color:var(--lavender-dim); font-size:13px; margin-bottom:14px;">
               Архивные записи о хирургических вмешательствах, в которых EULR.474 принимала участие
-              в качестве ассистента или хирурга.
+              в качестве ассистента или хирурга. Оформлено по стандарту медицинской карты.
             </div>
 
             <!-- Отчёт №1 -->
@@ -1857,8 +1880,8 @@
                   <div class="btn"></div>
                 </div>
                 
-                <!-- Логотип -->
-                <div class="logo">FIIO<span>AUTO REVERSE</span></div>
+                <!-- Логотип AEON -->
+                <div class="logo">AEON<span>AUTO REVERSE</span></div>
                 
                 <!-- Окошко с кассетой -->
                 <div class="cassette-window">
