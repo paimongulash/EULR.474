@@ -671,6 +671,19 @@
     animation: windowFlash 0.6s ease 2;
   }
 
+  .secret-blocks-vertical { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+  .secret-block { border: 1px solid var(--lavender-dim); background: rgba(8,12,24,.55); padding: 14px 16px; box-shadow: inset 0 0 20px rgba(0,0,0,.5); opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease, transform 0.6s ease; word-break: break-word; overflow-wrap: break-word; border-radius: 4px; }
+  .secret-block.show { opacity: 1; transform: translateY(0); }
+  .secret-block .sb-head { font-size: 11px; letter-spacing: 4px; color: var(--lavender); text-transform: uppercase; border-bottom: 2px solid var(--lavender-dim); padding-bottom: 8px; margin-bottom: 12px; text-shadow: var(--glow); }
+  .secret-block .sb-body { font-size: 13px; line-height: 1.7; color: var(--lavender-dim); letter-spacing: 1px; min-height: 40px; }
+
+  .album { border: 1px solid var(--lavender-dim); background: rgba(8,12,24,.55); padding: 14px; box-shadow: inset 0 0 20px rgba(0,0,0,.5); border-radius: 4px; }
+  .album-head { font-size: 11px; letter-spacing: 4px; color: var(--lavender); text-transform: uppercase; border-bottom: 2px solid var(--lavender-dim); padding-bottom: 8px; margin-bottom: 12px; text-shadow: var(--glow); }
+  .album-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .album-photo { position: relative; aspect-ratio: 3 / 4; border: 1px solid var(--lavender-dim); background: var(--blue-dark); display: flex; align-items: center; justify-content: center; color: var(--lavender-dim); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; box-shadow: inset 0 0 20px rgba(0,0,0,.8); overflow: hidden; border-radius: 4px; }
+  .album-photo::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(185,167,217,.1) 0 1px, transparent 1px 3px); pointer-events: none; z-index: 2; }
+  .album-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: none; position: relative; z-index: 1; }
+
   @media (max-width: 720px) {
     .tab-content > .grid { grid-template-columns: 1fr; grid-template-rows: auto 1fr; overflow-y: auto; }
     .portrait { height: 200px; width: 150px; margin: 0 auto; aspect-ratio: auto; max-height: none; }
@@ -1167,7 +1180,7 @@
         <div class="archive-content" id="archiveContent">
           <div class="secret-top">
             
-            <!-- ЛЕВАЯ КОЛОНКА: Плеер + Блоки -->
+            <!-- ЛЕВАЯ КОЛОНКА: Плеер + Кнопки + Блоки -->
             <div class="secret-left-col">
               <div class="vinyl-wrap">
                 <div class="cassette-player" id="cassettePlayer" title="Нажмите, чтобы включить / остановить">
@@ -1194,10 +1207,10 @@
                   </div>
                 </div>
                 
-                <!-- Кнопки выбора кассет -->
+                <!-- Кнопки выбора кассет (вынесены из плеера) -->
                 <div class="cassette-selector" id="cassetteSelector">
-                  <button class="cassette-selector-btn" data-src="Вайбик (2).mp3" data-name="Мы">Мы</button>
-                  <button class="cassette-selector-btn" data-src="Вайбик (3).mp3" data-name="Шанс">Шанс</button>
+                  <button class="cassette-selector-btn" data-src="Вайбик (2).mp3" data-name="Мы">МЫ</button>
+                  <button class="cassette-selector-btn" data-src="Вайбик (3).mp3" data-name="Шанс">ШАНС</button>
                 </div>
                 
                 <div class="vinyl-hint" id="vinylHint">ВЫБЕРИТЕ КАССЕТУ</div>
