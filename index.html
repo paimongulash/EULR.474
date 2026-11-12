@@ -170,7 +170,7 @@
     text-shadow: var(--glow);
     animation: bootScreen 1.2s ease-out;
     border-radius: 14px;
-    z-index: 20; /* Выше эффектов CRT */
+    z-index: 20;
   }
   @keyframes bootScreen {
     0% { opacity: 0; transform: scaleY(0.02); filter: brightness(3); }
@@ -493,6 +493,14 @@
   /* ===== СЕКРЕТНЫЙ РАЗДЕЛ ===== */
   .secret-top { display: grid; grid-template-columns: 320px 1fr; gap: 22px; align-items: start; }
   
+  /* НОВАЯ ОБЕРТКА ДЛЯ ЛЕВОЙ КОЛОНКИ */
+  .secret-left-col {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
+
   /* Кассетный проигрыватель */
   .vinyl-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px; border: 1px solid var(--lavender-dim); background: rgba(8,12,24,.55); box-shadow: inset 0 0 20px rgba(0,0,0,.5); border-radius: 6px; }
   .cassette-player { position: relative; width: 260px; height: 180px; border: 2px solid var(--lavender-dim); background: linear-gradient(180deg, #2a3654 0%, #1c2438 100%); border-radius: 8px; box-shadow: inset 0 0 20px rgba(0,0,0,.6), 0 4px 10px rgba(0,0,0,.5); cursor: pointer; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; }
@@ -524,7 +532,7 @@
   .vinyl-hint { font-size: 10px; letter-spacing: 3px; color: var(--lavender-dim); text-transform: uppercase; text-align: center; transition: color .2s ease; margin-top: 4px; }
   .vinyl-hint.playing { color: var(--lavender); text-shadow: var(--glow); }
 
-  .secret-blocks-vertical { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; width: 100%; }
+  .secret-blocks-vertical { display: flex; flex-direction: column; gap: 15px; width: 100%; }
   .secret-block { border: 1px solid var(--lavender-dim); background: rgba(8,12,24,.55); padding: 14px 16px; box-shadow: inset 0 0 20px rgba(0,0,0,.5); opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease, transform 0.6s ease; word-break: break-word; overflow-wrap: break-word; border-radius: 4px; }
   .secret-block.show { opacity: 1; transform: translateY(0); }
   .secret-block .sb-head { font-size: 11px; letter-spacing: 4px; color: var(--lavender); text-transform: uppercase; border-bottom: 2px solid var(--lavender-dim); padding-bottom: 8px; margin-bottom: 12px; text-shadow: var(--glow); }
@@ -1034,42 +1042,47 @@
         <!-- ===== СЕКРЕТНЫЙ РАЗДЕЛ (АРХИВ) ===== -->
         <div class="archive-content" id="archiveContent">
           <div class="secret-top">
-            <div class="vinyl-wrap">
-              <!-- Кассетный проигрыватель -->
-              <div class="cassette-player" id="cassettePlayer" title="Нажмите, чтобы включить / остановить">
-                <!-- Верхние кнопки -->
-                <div class="top-buttons">
-                  <div class="btn"></div>
-                  <div class="btn"></div>
-                  <div class="btn"></div>
-                  <div class="btn"></div>
+            
+            <!-- ЛЕВАЯ КОЛОНКА: Плеер + Блоки -->
+            <div class="secret-left-col">
+              <div class="vinyl-wrap">
+                <!-- Кассетный проигрыватель -->
+                <div class="cassette-player" id="cassettePlayer" title="Нажмите, чтобы включить / остановить">
+                  <!-- Верхние кнопки -->
+                  <div class="top-buttons">
+                    <div class="btn"></div>
+                    <div class="btn"></div>
+                    <div class="btn"></div>
+                    <div class="btn"></div>
+                  </div>
+                  
+                  <!-- Логотип AEON -->
+                  <div class="logo">AEON<span>AUTO REVERSE</span></div>
+                  
+                  <!-- Окошко с кассетой -->
+                  <div class="cassette-window">
+                    <div class="tape-label">RE90</div>
+                    <div class="reel"></div>
+                    <div class="reel"></div>
+                  </div>
+                  
+                  <!-- Текст снизу -->
+                  <div class="bottom-text">
+                    PORTABLE HIGH RESOLUTION CASSETTEPLAYER<br>
+                    MODE CP13
+                  </div>
+                  
+                  <!-- Колесико сбоку -->
+                  <div class="side-wheel" id="volumeWheel" title="Громкость">
+                    <div class="volume-indicator" id="volumeIndicator"></div>
+                  </div>
                 </div>
                 
-                <!-- Логотип AEON -->
-                <div class="logo">AEON<span>AUTO REVERSE</span></div>
-                
-                <!-- Окошко с кассетой -->
-                <div class="cassette-window">
-                  <div class="tape-label">RE90</div>
-                  <div class="reel"></div>
-                  <div class="reel"></div>
-                </div>
-                
-                <!-- Текст снизу -->
-                <div class="bottom-text">
-                  PORTABLE HIGH RESOLUTION CASSETTEPLAYER<br>
-                  MODE CP13
-                </div>
-                
-                <!-- Колесико сбоку -->
-                <div class="side-wheel" id="volumeWheel" title="Громкость">
-                  <div class="volume-indicator" id="volumeIndicator"></div>
-                </div>
+                <div class="vinyl-hint" id="vinylHint">НАЖМИТЕ · ВОСПРОИЗВЕДЕНИЕ</div>
+                <audio id="vinylAudio" src="Вайбик.mp3" preload="auto" loop></audio>
               </div>
-              
-              <div class="vinyl-hint" id="vinylHint">НАЖМИТЕ · ВОСПРОИЗВЕДЕНИЕ</div>
-              <audio id="vinylAudio" src="Вайбик.mp3" preload="auto" loop></audio>
-              
+
+              <!-- Блоки (вынесены из vinyl-wrap) -->
               <div class="secret-blocks-vertical" id="secretBlocks">
                 <div class="secret-block">
                   <div class="sb-head">Фетиши и наклонности</div>
@@ -1092,6 +1105,7 @@
               </div>
             </div>
 
+            <!-- ПРАВАЯ КОЛОНКА: Фотоальбом -->
             <div class="album">
               <div class="album-head">ФОТОАЛЬБОМ // EULR.474</div>
               <div class="album-grid">
@@ -1101,6 +1115,7 @@
                 <div class="album-photo"><img src="photo1.png" alt="Фото 04"></div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
