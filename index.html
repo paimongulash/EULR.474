@@ -492,14 +492,7 @@
 
   /* ===== СЕКРЕТНЫЙ РАЗДЕЛ ===== */
   .secret-top { display: grid; grid-template-columns: 320px 1fr; gap: 22px; align-items: start; }
-  
-  /* НОВАЯ ОБЕРТКА ДЛЯ ЛЕВОЙ КОЛОНКИ */
-  .secret-left-col {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-  }
+  .secret-left-col { display: flex; flex-direction: column; gap: 15px; width: 100%; }
 
   /* Кассетный проигрыватель */
   .vinyl-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px; border: 1px solid var(--lavender-dim); background: rgba(8,12,24,.55); box-shadow: inset 0 0 20px rgba(0,0,0,.5); border-radius: 6px; }
@@ -722,7 +715,6 @@
       <!-- ===================== КРАТКАЯ СВОДКА ===================== -->
       <div class="tab-content" id="tab-summary">
         <div class="data">
-          <!-- ФОТО В НАЧАЛЕ -->
           <div class="section summary-photo-section">
             <div class="summary-photo">
               <img src="11.png" alt="EULR.474 // Фото 1">
@@ -787,7 +779,6 @@
             </div>
           </div>
 
-          <!-- ФОТО В КОНЦЕ -->
           <div class="section summary-photo-section">
             <div class="summary-photo">
               <img src="12.png" alt="EULR.474 // Фото 2">
@@ -1046,33 +1037,20 @@
             <!-- ЛЕВАЯ КОЛОНКА: Плеер + Блоки -->
             <div class="secret-left-col">
               <div class="vinyl-wrap">
-                <!-- Кассетный проигрыватель -->
                 <div class="cassette-player" id="cassettePlayer" title="Нажмите, чтобы включить / остановить">
-                  <!-- Верхние кнопки -->
                   <div class="top-buttons">
-                    <div class="btn"></div>
-                    <div class="btn"></div>
-                    <div class="btn"></div>
-                    <div class="btn"></div>
+                    <div class="btn"></div><div class="btn"></div><div class="btn"></div><div class="btn"></div>
                   </div>
-                  
-                  <!-- Логотип AEON -->
                   <div class="logo">AEON<span>AUTO REVERSE</span></div>
-                  
-                  <!-- Окошко с кассетой -->
                   <div class="cassette-window">
                     <div class="tape-label">RE90</div>
                     <div class="reel"></div>
                     <div class="reel"></div>
                   </div>
-                  
-                  <!-- Текст снизу -->
                   <div class="bottom-text">
                     PORTABLE HIGH RESOLUTION CASSETTEPLAYER<br>
                     MODE CP13
                   </div>
-                  
-                  <!-- Колесико сбоку -->
                   <div class="side-wheel" id="volumeWheel" title="Громкость">
                     <div class="volume-indicator" id="volumeIndicator"></div>
                   </div>
@@ -1082,7 +1060,7 @@
                 <audio id="vinylAudio" src="Вайбик.mp3" preload="auto" loop></audio>
               </div>
 
-              <!-- Блоки (вынесены из vinyl-wrap) -->
+              <!-- Блоки под плеером -->
               <div class="secret-blocks-vertical" id="secretBlocks">
                 <div class="secret-block">
                   <div class="sb-head">Фетиши и наклонности</div>
@@ -1100,6 +1078,7 @@
                       <span style="color:var(--lavender); margin-right:6px;">▸</span>
                       Выражается яркий интерес к живописи.
                     </div>
+                    <div style="margin-top:10px; font-style:italic; color:var(--lavender-dim); font-size:11px; letter-spacing:1px;">[ ДАННЫЕ БУДУТ ОТКРЫВАТЬСЯ ПО МЕРЕ ОБНАРУЖЕНИЯ ]</div>
                   </div>
                 </div>
               </div>
@@ -1229,24 +1208,22 @@
     var currentVolume = 0.5;
     var wheel = document.getElementById('volumeWheel');
     var indicator = document.getElementById('volumeIndicator');
-    
-    // Установка начальной громкости
+
     if (audio) {
       audio.volume = currentVolume;
     }
-    
-    // Функция обновления визуального индикатора
+
     function updateVolumeUI() {
       if (!indicator) return;
-      // Позиция от 5px до calc(100% - 5px)
-      indicator.style.top = (5 + (1 - currentVolume) * 40) + 'px'; // 40px примерно высота колесика за вычетом отступов
+      // Индикатор: от 5px (громко) до 45px (тихо) сверху вниз
+      var topPos = 5 + (1 - currentVolume) * 40;
+      indicator.style.top = topPos + 'px';
     }
     updateVolumeUI();
 
-    // Обработка колесика мыши для изменения громкости
     if (wheel) {
       wheel.addEventListener('wheel', function(e) {
-        e.preventDefault(); // Останавливаем скролл страницы
+        e.preventDefault();
         if (e.deltaY < 0) {
           currentVolume = Math.min(1, currentVolume + 0.05);
         } else {
@@ -1254,10 +1231,10 @@
         }
         if (audio) audio.volume = currentVolume;
         updateVolumeUI();
-      });
+      }, { passive: false });
     }
 
-    function updateHint() {
+    function updatePlayerUI() {
       if (!audio || !hint) return;
       var playing = !audio.paused;
       if (cassette) cassette.classList.toggle('playing', playing);
@@ -1271,20 +1248,25 @@
 
     if (cassette && audio) {
       cassette.addEventListener('click', function (e) {
-        // Если кликнули по колесику громкости, не запускаем музыку
         if (e.target.closest('.side-wheel')) return;
-        
+
         if (audio.paused) {
-          var p = audio.play();
-          if (p && p.catch) p.catch(function () {});
+          var playPromise = audio.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(function(error) {
+              console.error('Ошибка воспроизведения:', error);
+              if (hint) hint.textContent = 'ОШИБКА: ПРОВЕРЬТЕ ФАЙЛ Вайбик.mp3';
+            });
+          }
         } else {
           audio.pause();
         }
       });
-      audio.addEventListener('play', updateHint);
-      audio.addEventListener('pause', updateHint);
-      audio.addEventListener('ended', updateHint);
-      updateHint();
+
+      audio.addEventListener('play', updatePlayerUI);
+      audio.addEventListener('pause', updatePlayerUI);
+      audio.addEventListener('ended', updatePlayerUI);
+      updatePlayerUI();
     }
 
     /* ===== RELATIONS ===== */
