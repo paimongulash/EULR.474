@@ -383,7 +383,7 @@
   .archive-content {
     flex: 1 1 auto; 
     min-height: 0; 
-    overflow-y: auto;   /* ← прокрутка включена */
+    overflow-y: auto;
     overflow-x: hidden;
     display: none; 
     margin-top: 18px; 
@@ -531,18 +531,145 @@
   .vinyl-hint { font-size: 10px; letter-spacing: 3px; color: var(--lavender-dim); text-transform: uppercase; text-align: center; transition: color .2s ease; margin-top: 4px; }
   .vinyl-hint.playing { color: var(--lavender); text-shadow: var(--glow); }
 
-  .secret-blocks-vertical { display: flex; flex-direction: column; gap: 15px; width: 100%; }
-  .secret-block { border: 1px solid var(--lavender-dim); background: rgba(8,12,24,.55); padding: 14px 16px; box-shadow: inset 0 0 20px rgba(0,0,0,.5); opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease, transform 0.6s ease; word-break: break-word; overflow-wrap: break-word; border-radius: 4px; }
-  .secret-block.show { opacity: 1; transform: translateY(0); }
-  .secret-block .sb-head { font-size: 11px; letter-spacing: 4px; color: var(--lavender); text-transform: uppercase; border-bottom: 2px solid var(--lavender-dim); padding-bottom: 8px; margin-bottom: 12px; text-shadow: var(--glow); }
-  .secret-block .sb-body { font-size: 13px; line-height: 1.7; color: var(--lavender-dim); letter-spacing: 1px; min-height: 40px; }
+  /* ===== КНОПКИ ВЫБОРА КАССЕТ ===== */
+  .cassette-selector {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    width: 100%;
+  }
+  .cassette-selector-btn {
+    background: rgba(8,12,24,.7);
+    border: 1px solid var(--lavender-dim);
+    color: var(--lavender-dim);
+    font-family: inherit;
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 3px;
+    transition: all .2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .cassette-selector-btn::before {
+    content: "▶";
+    margin-right: 6px;
+    font-size: 8px;
+    opacity: .6;
+  }
+  .cassette-selector-btn:hover:not(:disabled) {
+    background: rgba(185,167,217,.15);
+    color: var(--lavender);
+    border-color: var(--lavender);
+    box-shadow: 0 0 8px rgba(185,167,217,.3);
+  }
+  .cassette-selector-btn.active {
+    background: var(--lavender-dim);
+    color: var(--lavender-soft);
+    border-color: var(--lavender);
+    box-shadow: 0 0 10px rgba(185,167,217,.5);
+  }
+  .cassette-selector-btn.active::before {
+    content: "♪";
+    opacity: 1;
+  }
+  .cassette-selector-btn:disabled {
+    opacity: .3;
+    cursor: default;
+  }
 
-  .album { border: 1px solid var(--lavender-dim); background: rgba(8,12,24,.55); padding: 14px; box-shadow: inset 0 0 20px rgba(0,0,0,.5); border-radius: 4px; }
-  .album-head { font-size: 11px; letter-spacing: 4px; color: var(--lavender); text-transform: uppercase; border-bottom: 2px solid var(--lavender-dim); padding-bottom: 8px; margin-bottom: 12px; text-shadow: var(--glow); }
-  .album-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .album-photo { position: relative; aspect-ratio: 3 / 4; border: 1px solid var(--lavender-dim); background: var(--blue-dark); display: flex; align-items: center; justify-content: center; color: var(--lavender-dim); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; box-shadow: inset 0 0 20px rgba(0,0,0,.8); overflow: hidden; border-radius: 4px; }
-  .album-photo::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(185,167,217,.1) 0 1px, transparent 1px 3px); pointer-events: none; z-index: 2; }
-  .album-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: none; position: relative; z-index: 1; }
+  /* ===== ЛЕТАЮЩАЯ КАССЕТА ===== */
+  .flying-cassette {
+    position: absolute;
+    left: 50%;
+    top: 40px;
+    width: 120px;
+    height: 60px;
+    margin-left: -60px;
+    background: linear-gradient(180deg, #3a2d4f 0%, #1c1a2e 100%);
+    border: 2px solid var(--lavender-dim);
+    border-radius: 4px;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 0 15px rgba(185,167,217,.3);
+  }
+  .flying-cassette::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    right: 10px;
+    height: 12px;
+    background: rgba(255,255,255,.1);
+    border-radius: 2px;
+  }
+  .flying-cassette::after {
+    content: "RE90";
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 7px;
+    color: var(--lavender-dim);
+    letter-spacing: 2px;
+  }
+  .flying-cassette .fc-reel {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 2px solid #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .flying-cassette .fc-reel::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #888;
+  }
+
+  @keyframes cassetteFly {
+    0% {
+      opacity: 0;
+      transform: translate(0, -180px) rotate(-15deg) scale(0.8);
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(0, 30px) rotate(0deg) scale(1);
+    }
+  }
+  .flying-cassette.animate {
+    animation: cassetteFly 1.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  }
+
+  @keyframes windowFlash {
+    0%, 100% { box-shadow: inset 0 0 15px rgba(0,0,0,.8); }
+    50% { box-shadow: inset 0 0 25px rgba(185,167,217,.8), 0 0 15px rgba(185,167,217,.5); }
+  }
+  .cassette-player .cassette-window.flash {
+    animation: windowFlash 0.6s ease 2;
+  }
 
   @media (max-width: 720px) {
     .tab-content > .grid { grid-template-columns: 1fr; grid-template-rows: auto 1fr; overflow-y: auto; }
@@ -1048,7 +1175,7 @@
                     <div class="btn"></div><div class="btn"></div><div class="btn"></div><div class="btn"></div>
                   </div>
                   <div class="logo">AEON<span>AUTO REVERSE</span></div>
-                  <div class="cassette-window">
+                  <div class="cassette-window" id="cassetteWindow">
                     <div class="tape-label">RE90</div>
                     <div class="reel"></div>
                     <div class="reel"></div>
@@ -1057,13 +1184,24 @@
                     PORTABLE HIGH RESOLUTION CASSETTEPLAYER<br>
                     MODE CP13
                   </div>
+                  <!-- Летающая кассета -->
+                  <div class="flying-cassette" id="flyingCassette">
+                    <div class="fc-reel"></div>
+                    <div class="fc-reel"></div>
+                  </div>
                   <div class="side-wheel" id="volumeWheel" title="Громкость">
                     <div class="volume-indicator" id="volumeIndicator"></div>
                   </div>
                 </div>
                 
-                <div class="vinyl-hint" id="vinylHint">НАЖМИТЕ · ВОСПРОИЗВЕДЕНИЕ</div>
-                <audio id="vinylAudio" src="Вайбик (2).mp3" preload="auto" loop></audio>
+                <!-- Кнопки выбора кассет -->
+                <div class="cassette-selector" id="cassetteSelector">
+                  <button class="cassette-selector-btn" data-src="Вайбик (2).mp3" data-name="Мы">Мы</button>
+                  <button class="cassette-selector-btn" data-src="Вайбик (3).mp3" data-name="Шанс">Шанс</button>
+                </div>
+                
+                <div class="vinyl-hint" id="vinylHint">ВЫБЕРИТЕ КАССЕТУ</div>
+                <audio id="vinylAudio" preload="auto" loop></audio>
               </div>
 
               <!-- Блоки под плеером -->
@@ -1214,6 +1352,10 @@
     var currentVolume = 0.5;
     var wheel = document.getElementById('volumeWheel');
     var indicator = document.getElementById('volumeIndicator');
+    var flyingCassette = document.getElementById('flyingCassette');
+    var cassetteWindow = document.getElementById('cassetteWindow');
+    var selectorBtns = document.querySelectorAll('.cassette-selector-btn');
+    var currentCassette = null;
 
     if (audio) {
       audio.volume = currentVolume;
@@ -1245,22 +1387,102 @@
       if (cassette) cassette.classList.toggle('playing', playing);
       if (hint) {
         hint.classList.toggle('playing', playing);
-        hint.textContent = playing
-          ? 'ВОСПРОИЗВЕДЕНИЕ · НАЖМИТЕ, ЧТОБЫ ОСТАНОВИТЬ'
-          : 'НАЖМИТЕ · ВОСПРОИЗВЕДЕНИЕ';
+        if (playing && currentCassette) {
+          hint.textContent = '♪ ' + currentCassette.name.toUpperCase() + ' · ' + 'ВОСПРОИЗВЕДЕНИЕ';
+        } else if (currentCassette) {
+          hint.textContent = '♪ ' + currentCassette.name.toUpperCase() + ' · ПАУЗА';
+        } else {
+          hint.textContent = 'ВЫБЕРИТЕ КАССЕТУ';
+        }
       }
     }
 
+    /* ==== ВЫБОР КАССЕТЫ С АНИМАЦИЕЙ ==== */
+    selectorBtns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        
+        var src = btn.getAttribute('data-src');
+        var name = btn.getAttribute('data-name');
+        if (!src || !name) return;
+        
+        // Если эта же кассета уже играет — останавливаем
+        if (currentCassette && currentCassette.src === src && audio && !audio.paused) {
+          audio.pause();
+          currentCassette = null;
+          selectorBtns.forEach(function(b) { b.classList.remove('active'); });
+          updatePlayerUI();
+          return;
+        }
+        
+        // Сбрасываем активные кнопки
+        selectorBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        
+        // Останавливаем предыдущее аудио
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+        
+        currentCassette = { src: src, name: name };
+        
+        // Запускаем анимацию полёта
+        if (flyingCassette) {
+          flyingCassette.classList.remove('animate');
+          void flyingCassette.offsetWidth;
+          flyingCassette.classList.add('animate');
+        }
+        
+        if (hint) {
+          hint.classList.remove('playing');
+          hint.textContent = 'ВСТАВКА КАССЕТЫ «' + name.toUpperCase() + '»...';
+        }
+        
+        // Через 1.3 секунды — вспышка и запуск
+        setTimeout(function() {
+          if (cassetteWindow) cassetteWindow.classList.add('flash');
+          
+          if (audio) {
+            audio.src = src;
+            audio.currentTime = 0;
+            var playPromise = audio.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(function(error) {
+                console.error('Ошибка воспроизведения:', error);
+                if (hint) hint.textContent = 'ОШИБКА: ПРОВЕРЬТЕ ФАЙЛ ' + src;
+              });
+            }
+          }
+          
+          setTimeout(function() {
+            if (cassetteWindow) cassetteWindow.classList.remove('flash');
+            if (flyingCassette) {
+              flyingCassette.classList.remove('animate');
+              flyingCassette.style.opacity = '0';
+            }
+          }, 1200);
+        }, 1300);
+      });
+    });
+
+    /* ==== КЛИК ПО ПРОИГРЫВАТЕЛЮ (ПАУЗА/ПРОДОЛЖИТЬ) ==== */
     if (cassette && audio) {
       cassette.addEventListener('click', function (e) {
         if (e.target.closest('.side-wheel')) return;
+        if (e.target.closest('.cassette-selector')) return;
+        if (e.target.closest('.cassette-selector-btn')) return;
+
+        if (!currentCassette) {
+          if (hint) hint.textContent = 'СНАЧАЛА ВЫБЕРИТЕ КАССЕТУ';
+          return;
+        }
 
         if (audio.paused) {
           var playPromise = audio.play();
           if (playPromise !== undefined) {
             playPromise.catch(function(error) {
               console.error('Ошибка воспроизведения:', error);
-              if (hint) hint.textContent = 'ОШИБКА: ПРОВЕРЬТЕ ФАЙЛ Вайбик (2).mp3';
             });
           }
         } else {
