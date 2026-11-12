@@ -381,8 +381,14 @@
   .archive-lock .error { color: #ff5f7f; font-size: 11px; letter-spacing: 2px; text-shadow: 0 0 6px rgba(255,95,127,.6); min-height: 14px; }
 
   .archive-content {
-    flex: 1 1 auto; min-height: 0; overflow: hidden;
-    display: none; margin-top: 18px; flex-direction: column;
+    flex: 1 1 auto; 
+    min-height: 0; 
+    overflow-y: auto;   /* ← прокрутка включена */
+    overflow-x: hidden;
+    display: none; 
+    margin-top: 18px; 
+    flex-direction: column;
+    padding-right: 10px; 
   }
   .archive-content.unlocked { display: flex; }
 
@@ -491,7 +497,7 @@
   .item-card .item-desc { font-size: 12px; line-height: 1.45; color: var(--lavender-dim); letter-spacing: .5px; }
 
   /* ===== СЕКРЕТНЫЙ РАЗДЕЛ ===== */
-  .secret-top { display: grid; grid-template-columns: 320px 1fr; gap: 22px; align-items: start; }
+  .secret-top { display: grid; grid-template-columns: 320px 1fr; gap: 22px; align-items: start; flex-shrink: 0; }
   .secret-left-col { display: flex; flex-direction: column; gap: 15px; width: 100%; }
 
   /* Кассетный проигрыватель */
@@ -514,10 +520,10 @@
   .cassette-player .bottom-text { margin-top: 6px; font-size: 7px; color: #6b7a99; letter-spacing: 1px; text-align: center; z-index: 5; }
   
   /* Колесико громкости */
-  .cassette-player .side-wheel { position: absolute; right: -8px; top: 50%; transform: translateY(-50%); width: 24px; height: 50px; background: #8a9cbe; border: 2px solid var(--blue-dark); border-radius: 4px; box-shadow: inset -2px 0 0 rgba(0,0,0,.3); z-index: 20; display: flex; align-items: center; justify-content: center; cursor: ns-resize; }
+  .cassette-player .side-wheel { position: absolute; right: -8px; top: 50%; transform: translateY(-50%); width: 24px; height: 50px; background: #8a9cbe; border: 2px solid var(--blue-dark); border-radius: 4px; box-shadow: inset -2px 0 0 rgba(0,0,0,.3); z-index: 30; cursor: ns-resize; overflow: hidden; }
   .cassette-player .side-wheel::after { content: ""; position: absolute; top: 4px; bottom: 4px; left: 4px; right: 4px; border: 1px dashed rgba(0,0,0,.3); border-radius: 2px; background: rgba(0,0,0,.1); }
   .cassette-player .side-wheel::before { content: ""; position: absolute; left: 50%; top: 5px; width: 2px; height: calc(100% - 10px); background: rgba(255,255,255,.2); transform: translateX(-50%); }
-  .cassette-player .volume-indicator { position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; background: #fff; transform: translate(-50%, -50%); box-shadow: 0 0 4px #fff; pointer-events: none; }
+  .cassette-player .volume-indicator { position: absolute; left: 50%; top: 5px; width: 16px; height: 4px; background: #fff; transform: translateX(-50%); box-shadow: 0 0 6px #fff, 0 0 2px #000; pointer-events: none; z-index: 31; transition: top 0.1s ease; border-radius: 2px; }
 
   @keyframes spin { to { transform: rotate(360deg); } }
   .cassette-player.playing .reel { animation: spin 1.5s linear infinite; }
@@ -1215,8 +1221,7 @@
 
     function updateVolumeUI() {
       if (!indicator) return;
-      // Индикатор: от 5px (громко) до 45px (тихо) сверху вниз
-      var topPos = 5 + (1 - currentVolume) * 40;
+      var topPos = 5 + (1 - currentVolume) * 36;
       indicator.style.top = topPos + 'px';
     }
     updateVolumeUI();
@@ -1255,7 +1260,7 @@
           if (playPromise !== undefined) {
             playPromise.catch(function(error) {
               console.error('Ошибка воспроизведения:', error);
-              if (hint) hint.textContent = 'ОШИБКА: ПРОВЕРЬТЕ ФАЙЛ Вайбик.mp3';
+              if (hint) hint.textContent = 'ОШИБКА: ПРОВЕРЬТЕ ФАЙЛ Вайбик (2).mp3';
             });
           }
         } else {
